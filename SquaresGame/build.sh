@@ -8,6 +8,7 @@ g++ \
     Shader.cpp \
     SpriteRenderer.cpp \
     Texture.cpp \
+    Rect.cpp \
     -lglfw \
     -lGLEW \
     -lGL \
@@ -28,6 +29,7 @@ g++ \
     Shader.cpp \
     SpriteRenderer.cpp \
     Texture.cpp \
+    Rect.cpp \
     -I/usr/local/include \
     -L/usr/local/lib \
     -lglfw.3 \
