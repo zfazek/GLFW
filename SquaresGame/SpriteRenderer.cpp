@@ -1,6 +1,6 @@
 #include "SpriteRenderer.h"
 
-SpriteRenderer::SpriteRenderer(Shader &shader) {
+SpriteRenderer::SpriteRenderer(const Shader& shader) {
     this->shader = shader;
     this->initRenderData();
 }
@@ -9,8 +9,8 @@ SpriteRenderer::~SpriteRenderer() {
     glDeleteVertexArrays(1, &this->quadVAO);
 }
 
-void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec2 size, GLfloat rotate, glm::vec3 color) {
-    this->shader.Use();
+void SpriteRenderer::drawSprite(const Texture2D& texture, const glm::vec2 position, const glm::vec2 size, const GLfloat rotate, const glm::vec3 color) {
+    this->shader.use();
     glm::mat4 model;
     model = glm::translate(model, glm::vec3(position, 0.0f));
 
@@ -20,12 +20,12 @@ void SpriteRenderer::DrawSprite(Texture2D &texture, glm::vec2 position, glm::vec
 
     model = glm::scale(model, glm::vec3(size, 1.0f));
 
-    this->shader.SetMatrix4("model", model);
+    this->shader.setMatrix4("model", model);
 
-    this->shader.SetVector3f("spriteColor", color);
+    this->shader.setVector3f("spriteColor", color);
 
     glActiveTexture(GL_TEXTURE0);
-    texture.Bind();
+    texture.bind();
 
     glBindVertexArray(this->quadVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);

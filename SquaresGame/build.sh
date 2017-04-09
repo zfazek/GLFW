@@ -8,6 +8,26 @@ g++ \
     Shader.cpp \
     SpriteRenderer.cpp \
     Texture.cpp \
+    -lglfw \
+    -lGLEW \
+    -lGL \
+    -lSOIL \
+    -lX11 \
+    -lpthread \
+    -lXrandr \
+    -lXi \
+    -o SquaresGame
+
+exit
+
+g++ \
+    -std=c++11 \
+    SquaresGame.cpp \
+    Game.cpp \
+    ResourceManager.cpp \
+    Shader.cpp \
+    SpriteRenderer.cpp \
+    Texture.cpp \
     -I/usr/local/include \
     -L/usr/local/lib \
     -lglfw.3 \
@@ -15,7 +35,3 @@ g++ \
     -lSOIL \
     -framework OpenGL \
     -o SquaresGame
-
-exit
-
-#g++ youSource.cpp -I/usr/local/include -L/usr/local/lib -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework CoreFoundation -framework CoreVideo

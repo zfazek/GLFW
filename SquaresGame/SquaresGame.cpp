@@ -10,7 +10,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 const GLuint SCREEN_WIDTH = 800;
 const GLuint SCREEN_HEIGHT = 600;
 
-Game SquaresGame(SCREEN_WIDTH, SCREEN_HEIGHT);
+Game Game(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 int main(int argc, char *argv[]) {
     glfwInit();
@@ -34,12 +34,12 @@ int main(int argc, char *argv[]) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    SquaresGame.Init();
+    Game.init();
 
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
 
-    SquaresGame.State = GAME_ACTIVE;
+    Game.state = GAME_ACTIVE;
 
     while (!glfwWindowShouldClose(window)) {
         GLfloat currentFrame = glfwGetTime();
@@ -47,30 +47,33 @@ int main(int argc, char *argv[]) {
         lastFrame = currentFrame;
         glfwPollEvents();
 
-        SquaresGame.ProcessInput(deltaTime);
+        Game.processInput(deltaTime);
 
-        SquaresGame.Update(deltaTime);
+        Game.update(deltaTime);
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.8f, 0.3f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        SquaresGame.Render();
+        Game.render();
 
         glfwSwapBuffers(window);
     }
 
-    ResourceManager::Clear();
+    ResourceManager::clear();
 
     glfwTerminate();
     return 0;
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GL_TRUE);
+    }
     if (key >= 0 && key < 1024) {
-        if (action == GLFW_PRESS)
-            SquaresGame.Keys[key] = GL_TRUE;
-        else if (action == GLFW_RELEASE)
-            SquaresGame.Keys[key] = GL_FALSE;
+        if (action == GLFW_PRESS) {
+            Game.keys[key] = GL_TRUE;
+        }
+        else if (action == GLFW_RELEASE) {
+            Game.keys[key] = GL_FALSE;
+        }
     }
 }

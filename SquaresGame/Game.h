@@ -12,15 +12,17 @@ enum GameState {
 
 class Game {
 public:
-    GameState              State;
-    GLboolean              Keys[1024];
-    GLuint                 Width, Height;
+    GameState state;
+    GLboolean keys[1024];
+    GLuint width, height;
+
     Game(GLuint width, GLuint height);
     ~Game();
-    void Init();
-    void ProcessInput(GLfloat dt);
-    void Update(GLfloat dt);
-    void Render();
+
+    void init();
+    void processInput(GLfloat dt);
+    void update(GLfloat dt);
+    void render();
 };
 
 #endif
