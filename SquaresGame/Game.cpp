@@ -56,11 +56,13 @@ void Game::checkMouseClick(double mouseX, double mouseY) {
     } else {
         bool missed = true;
         count++;
-        for (const auto& rect : rects) {
-            if (rect->isInside(mouseX, mouseY)) {
+		for (auto it = rects.begin(); it != rects.end();) {
+            if ((*it)->isInside(mouseX, mouseY)) {
                 missed = false;
-                rects.erase(rect);
-            }
+                rects.erase(it++);
+			} else {
+				++it;
+			}
         }
         if (missed) {
             for (int i = 0; i < 4; i++) {
