@@ -1,6 +1,6 @@
-CXXFLAGS = -std=c++11 -O3 \
-		   -I/usr/local/include \
-		   -L/usr/local/lib
+CXXFLAGS = -std=c++11 -O3 -I/usr/local/include
+
+LDDIRS = -L/usr/local/lib
 
 LIBS=-lglfw.3 -lGLEW -lSOIL -framework OpenGL
 
@@ -13,8 +13,12 @@ objects = \
 	SpriteRenderer.o \
 	Texture.o
 
+
+%.o: %.cpp $(DEPS)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
 SquaresGame: $(objects)
-	$(CXX) $(CXXFLAGS) $(objects) $(LIBS) -o $@
+	$(CXX) $(CXXFLAGS) $(LDDIRS) $(objects) $(LIBS) -o $@
 
 SquaresGame.o: Game.h \
 	ResourceManager.h
