@@ -20,8 +20,8 @@ Game::~Game() {
 
 void Game::init() {
 #ifdef __APPLE__
-    ResourceManager::loadTexture("/Users/zfazek/git/GLFW/SquaresGame/resources/block.png", GL_TRUE, "face");
-    ResourceManager::loadShader("/Users/zfazek/git/GLFW/SquaresGame/shaders/vertex.glsl", "/Users/zfazek/git/GLFW/SquaresGame/shaders/fragment.glsl", nullptr, "sprite");
+    ResourceManager::loadTexture("block.png", GL_TRUE, "face");
+    ResourceManager::loadShader("../shaders/vertex.glsl", "../shaders/fragment.glsl", nullptr, "sprite");
 #else
     ResourceManager::loadTexture("resources/block.png", GL_TRUE, "face");
     ResourceManager::loadShader("shaders/vertex.glsl", "shaders/fragment.glsl", nullptr, "sprite");
