@@ -1,6 +1,8 @@
-CXXFLAGS = -std=c++11 -O3
+CXXFLAGS = -std=c++11 -O3 \
+		   -I/usr/local/include \
+		   -L/usr/local/lib
 
-LIBS=-lglfw -lGLEW -lGL -lSOIL
+LIBS=-lglfw.3 -lGLEW -lSOIL -framework OpenGL
 
 objects = \
 	SquaresGame.o \
