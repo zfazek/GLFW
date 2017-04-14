@@ -16,6 +16,9 @@ Game::Game(GLuint width, GLuint height) : state(GAME_ACTIVE), keys(), width(widt
 
 Game::~Game() {
     delete renderer;
+    for (const auto& rect : rects) {
+        delete rect;
+    }
 }
 
 void Game::init() {
@@ -49,6 +52,17 @@ void Game::update(GLfloat dt) {
 void Game::processInput(GLfloat dt) {
 }
 
+void Game::changeBackground() {
+    r = static_cast<GLfloat>(std::rand()) / RAND_MAX;
+    g = static_cast<GLfloat>(std::rand()) / RAND_MAX;
+    b = static_cast<GLfloat>(std::rand()) / RAND_MAX;
+}
+
+void Game::clearBackground() {
+    glClearColor(r, g, b, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Game::render() {
     for (const auto& rect : rects) {
         rect->draw(renderer);
@@ -64,12 +78,14 @@ void Game::checkMouseClick(double mouseX, double mouseY) {
         for (auto it = rects.begin(); it != rects.end();) {
             if ((*it)->isInside(mouseX, mouseY)) {
                 missed = false;
+                delete *it;
                 rects.erase(it++);
             } else {
                 ++it;
             }
         }
         if (missed) {
+            changeBackground();
             for (int i = 0; i < 4; i++) {
                 rects.insert(new Rect(width, height));
             }

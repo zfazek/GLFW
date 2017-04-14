@@ -1,5 +1,4 @@
-#ifndef TEXTURE_H
-#define TEXTURE_H
+#pragma once
 
 #include <GL/glew.h>
 
@@ -19,5 +18,3 @@ public:
     void generate(GLuint width, GLuint height, unsigned char* data);
     void bind() const;
 };
-
-#endif

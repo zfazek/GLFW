@@ -64,21 +64,17 @@ int main(int argc, char *argv[]) {
     GLfloat lastFrame = 0.0f;
 
     game.state = GAME_ACTIVE;
+    game.changeBackground();
 
     while (!glfwWindowShouldClose(window)) {
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
         glfwPollEvents();
-
         game.processInput(deltaTime);
-
         game.update(deltaTime);
-
-        glClearColor(0.8f, 0.3f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        game.clearBackground();
         game.render();
-
         glfwSwapBuffers(window);
     }
 

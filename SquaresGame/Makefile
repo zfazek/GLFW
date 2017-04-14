@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++11 -O3
+CXXFLAGS = -std=c++11 -g -O3
 
 LIBS=-lglfw -lGLEW -lGL -lSOIL
 

@@ -6,8 +6,8 @@
 
 #include <SOIL/SOIL.h>
 
-std::map<std::string, Texture2D>    ResourceManager::textures;
-std::map<std::string, Shader>       ResourceManager::shaders;
+std::map<std::string, Texture2D> ResourceManager::textures;
+std::map<std::string, Shader> ResourceManager::shaders;
 
 Shader ResourceManager::loadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile, std::string name) {
     shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);

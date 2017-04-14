@@ -1,5 +1,4 @@
-#ifndef SPRITE_RENDERER_H
-#define SPRITE_RENDERER_H
+#pragma once
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -19,5 +18,3 @@ private:
     GLuint quadVAO;
     void initRenderData();
 };
-
-#endif

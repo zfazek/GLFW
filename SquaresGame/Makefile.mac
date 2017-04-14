@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++11 -O3 -I/usr/local/include
+CXXFLAGS = -std=c++11 -g -O3 -I/usr/local/include
 
 LDDIRS = -L/usr/local/lib
 

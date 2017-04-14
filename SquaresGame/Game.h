@@ -2,9 +2,7 @@
 
 #include <set>
 
-#define GLEW_STATIC
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 class Rect;
 
@@ -20,6 +18,7 @@ public:
     GLboolean keys[1024];
     GLuint width, height;
     GLuint count;
+    GLfloat r, g, b;
     std::set<Rect*> rects;
 
     Game(GLuint width, GLuint height);
@@ -29,6 +28,8 @@ public:
     void create();
     void processInput(GLfloat dt);
     void update(GLfloat dt);
+    void clearBackground();
+    void changeBackground();
     void render();
     void checkMouseClick(double mouseX, double mouseY);
 };
