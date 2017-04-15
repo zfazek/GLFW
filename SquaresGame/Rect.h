@@ -7,11 +7,11 @@ class SpriteRenderer;
 
 class Rect {
     public:
-        Rect(GLuint width, GLuint height);
+        Rect(const GLuint width, const GLuint height);
         ~Rect();
-        void update(GLfloat dt);
-        void draw(SpriteRenderer* renderer);
-        bool isInside(double mouseX, double mouseY);
+        void update(const GLfloat dt);
+        void draw(SpriteRenderer* renderer) const;
+        bool isInside(double mouseX, double mouseY) const;
 
     private:
         GLfloat x, y, dx, dy;

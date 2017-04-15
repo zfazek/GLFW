@@ -17,12 +17,22 @@ SquaresGame: $(objects)
 SquaresGame.o: Game.h \
 	ResourceManager.h
 
-Game.o: Rect.h \
+Game.o: Game.h \
+	Rect.h \
 	ResourceManager.h \
 	SpriteRenderer.h
 
-Rect.o: SpriteRenderer.h \
+Rect.o: Rect.h \
+	SpriteRenderer.h \
 	ResourceManager.h
+
+ResourceManager.o: ResourceManager.h
+
+Shader.o: Shader.h
+
+SpriteRenderer.o: SpriteRenderer.h
+
+Texture.o: Texture.h
 
 clean:
 	rm -rf $(objects) SquaresGame

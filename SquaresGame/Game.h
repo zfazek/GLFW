@@ -6,7 +6,7 @@
 
 class Rect;
 
-enum GameState {
+enum class GameState {
     GAME_ACTIVE,
     GAME_MENU,
     GAME_WIN
@@ -21,15 +21,15 @@ public:
     GLfloat r, g, b;
     std::set<Rect*> rects;
 
-    Game(GLuint width, GLuint height);
+    Game(const GLuint width, const GLuint height);
     ~Game();
 
     void init();
     void create();
-    void processInput(GLfloat dt);
-    void update(GLfloat dt);
-    void clearBackground();
+    void processInput(const GLfloat dt);
+    void update(const GLfloat dt);
+    void clearBackground() const;
     void changeBackground();
-    void render();
-    void checkMouseClick(double mouseX, double mouseY);
+    void render() const;
+    void checkMouseClick(const double mouseX, const double mouseY);
 };

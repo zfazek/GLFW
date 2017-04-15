@@ -10,7 +10,7 @@
 
 SpriteRenderer* renderer;
 
-Game::Game(GLuint width, GLuint height) : state(GAME_ACTIVE), keys(), width(width), height(height) {
+Game::Game(const GLuint width, const GLuint height) : state(GameState::GAME_ACTIVE), keys(), width(width), height(height) {
     srand(std::time(0));
 }
 
@@ -43,13 +43,13 @@ void Game::create() {
     }
 }
 
-void Game::update(GLfloat dt) {
+void Game::update(const GLfloat dt) {
     for (const auto& rect : rects) {
         rect->update(dt);
     }
 }
 
-void Game::processInput(GLfloat dt) {
+void Game::processInput(const GLfloat dt) {
 }
 
 void Game::changeBackground() {
@@ -58,18 +58,18 @@ void Game::changeBackground() {
     b = static_cast<GLfloat>(std::rand()) / RAND_MAX;
 }
 
-void Game::clearBackground() {
+void Game::clearBackground() const {
     glClearColor(r, g, b, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Game::render() {
+void Game::render() const {
     for (const auto& rect : rects) {
         rect->draw(renderer);
     }
 }
 
-void Game::checkMouseClick(double mouseX, double mouseY) {
+void Game::checkMouseClick(const double mouseX, const double mouseY) {
     if (rects.size() == 0) {
         create();
     } else {

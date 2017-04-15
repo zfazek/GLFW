@@ -1,13 +1,13 @@
 #include "Rect.h"
 
 #include <cmath>
-#include <iostream>
+#include <cstdlib>
 
 #include "SpriteRenderer.h"
 #include "ResourceManager.h"
 
-Rect::Rect(GLuint width, GLuint height) : width(width), height(height) {
-    int maxSpeed = 100;
+Rect::Rect(const GLuint width, const GLuint height) : width(width), height(height) {
+    const int maxSpeed = 100;
     side = std::rand() % 100 + 100;
     x = std::rand() % (width - side);
     y = std::rand() % (height - side);
@@ -21,7 +21,7 @@ Rect::Rect(GLuint width, GLuint height) : width(width), height(height) {
 
 Rect::~Rect() {}
 
-void Rect::update(GLfloat dt) {
+void Rect::update(const GLfloat dt) {
     x += dx * dt;
     y += dy * dt;
     if (x <= 0) {
@@ -36,7 +36,7 @@ void Rect::update(GLfloat dt) {
     }
 }
 
-void Rect::draw(SpriteRenderer* renderer) {
+void Rect::draw(SpriteRenderer* renderer) const {
     const Texture2D& texture = ResourceManager::getTexture("face");
     const glm::vec2 position = glm::vec2(x, y);
     const glm::vec2 size = glm::vec2(side, side);
@@ -44,6 +44,6 @@ void Rect::draw(SpriteRenderer* renderer) {
     renderer->drawSprite(texture, position, size, rotate, color);
 }
 
-bool Rect::isInside(double mouseX, double mouseY) {
+bool Rect::isInside(double mouseX, double mouseY) const {
     return mouseX > x && mouseX < x + side && mouseY > y && mouseY < y + side;
 }

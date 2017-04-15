@@ -9,28 +9,31 @@
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;
 
-Shader ResourceManager::loadShader(const GLchar *vShaderFile, const GLchar *fShaderFile, const GLchar *gShaderFile, std::string name) {
+ResourceManager::ResourceManager() {
+}
+
+Shader ResourceManager::loadShader(const GLchar* vShaderFile, const GLchar* fShaderFile, const GLchar* gShaderFile, const std::string name) {
     shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
     return shaders[name];
 }
 
-Shader ResourceManager::getShader(std::string name) {
-    return shaders[name];
+Shader ResourceManager::getShader(const std::string name) {
+    return shaders.at(name);
 }
 
-Texture2D ResourceManager::loadTexture(const GLchar *file, GLboolean alpha, std::string name) {
+Texture2D ResourceManager::loadTexture(const GLchar* file, const GLboolean alpha, const std::string name) {
     textures[name] = loadTextureFromFile(file, alpha);
     return textures[name];
 }
 
-Texture2D ResourceManager::getTexture(std::string name) {
-    return textures[name];
+Texture2D ResourceManager::getTexture(const std::string name) {
+    return textures.at(name);
 }
 
 void ResourceManager::clear() {
-    for (auto iter : shaders)
+    for (const auto& iter : shaders)
         glDeleteProgram(iter.second.ID);
-    for (auto iter : textures)
+    for (const auto& iter : textures)
         glDeleteTextures(1, &iter.second.ID);
 }
 
@@ -67,7 +70,7 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
     return shader;
 }
 
-Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, GLboolean alpha) {
+Texture2D ResourceManager::loadTextureFromFile(const GLchar *file, const GLboolean alpha) {
     Texture2D texture;
     if (alpha) {
         texture.internal_Format = GL_RGBA;

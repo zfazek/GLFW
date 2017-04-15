@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
 
-    game.state = GAME_ACTIVE;
+    game.state = GameState::GAME_ACTIVE;
     game.changeBackground();
 
     while (!glfwWindowShouldClose(window)) {
