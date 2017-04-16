@@ -41,11 +41,14 @@ void Game::create() {
         Rect* rect = new Rect(width, height);
         rects.insert(rect);
     }
+    state = GameState::GAME_ACTIVE;
 }
 
 void Game::update(const GLfloat dt) {
-    for (const auto& rect : rects) {
-        rect->update(dt);
+    if (state == GameState::GAME_ACTIVE) {
+        for (const auto& rect : rects) {
+            rect->update(dt);
+        }
     }
 }
 
@@ -64,15 +67,17 @@ void Game::clearBackground() const {
 }
 
 void Game::render() const {
-    for (const auto& rect : rects) {
-        rect->draw(renderer);
+    if (state == GameState::GAME_ACTIVE) {
+        for (const auto& rect : rects) {
+            rect->draw(renderer);
+        }
     }
 }
 
 void Game::checkMouseClick(const double mouseX, const double mouseY) {
-    if (rects.size() == 0) {
+    if (state == GameState::GAME_WIN) {
         create();
-    } else {
+    } else if (state == GameState::GAME_ACTIVE) {
         bool missed = true;
         count++;
         for (auto it = rects.begin(); it != rects.end();) {
@@ -91,6 +96,7 @@ void Game::checkMouseClick(const double mouseX, const double mouseY) {
             }
         }
         if (rects.size() == 0) {
+            state = GameState::GAME_WIN;
             std::cout << "You clicked " << count << " times." << std::endl;
         }
     }
