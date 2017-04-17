@@ -34,3 +34,8 @@ Release/
 # Visual Studio files
 *.db
 *.opendb
+
+# Code::Blocks files
+*.depend
+*.layout
+*.cscope_file_list

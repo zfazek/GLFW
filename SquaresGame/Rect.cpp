@@ -19,7 +19,8 @@ Rect::Rect(const GLuint width, const GLuint height) : width(width), height(heigh
     color = glm::vec3(r, g, b);
 }
 
-Rect::~Rect() {}
+Rect::~Rect() {
+}
 
 void Rect::update(const GLfloat dt) {
     x += dx * dt;
