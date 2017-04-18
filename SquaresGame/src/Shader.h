@@ -23,5 +23,5 @@ public:
     void setVector4f(const GLchar *name, const glm::vec4 &value, const GLboolean useShader = false);
     void setMatrix4fv(const GLchar *name, const glm::mat4 &matrix, const GLboolean useShader = false);
 private:
-    void checkCompileErrors(const GLuint object, const std::string& type);
+    void checkCompileErrors(const GLuint object, const std::string& type, const std::string& name = "");
 };

@@ -15,10 +15,17 @@ Game::~Game() {
     for (const auto& rect : rects) {
         delete rect;
     }
+    delete textRenderer;
 }
 
 void Game::init() {
     Rect::init(width, height);
+    textRenderer = new TextRenderer(width, height);
+#ifdef __APPLE__
+    textRenderer->load("ocraext.ttf", 24);
+#else
+    textRenderer->load("resources/ocraext.ttf", 24);
+#endif
 }
 
 void Game::create() {
@@ -57,6 +64,9 @@ void Game::render() const {
         for (const auto& rect : rects) {
             rect->draw();
         }
+    } else if (state == GameState::GAME_WIN) {
+        const std::string text = "You clicked " + std::to_string(count) + " times.";
+        textRenderer->renderText(text, 10, 10, 4);
     }
 }
 
@@ -83,7 +93,6 @@ void Game::checkMouseClick(const double mouseX, const double mouseY) {
         }
         if (rects.size() == 0) {
             state = GameState::GAME_WIN;
-            std::cout << "You clicked " << count << " times." << std::endl;
         }
     }
 }

@@ -2,13 +2,14 @@ EXE = SquaresGame
 
 CXXFLAGS = -std=c++11 -g -O3
 
-INCLUDEDIRS= -I/usr/local/include
+INCLUDEDIRS= -I/usr/local/include \
+ -I/usr/local/include/freetype2
 LDDIRS = -L/usr/local/lib
 
-LIBS=-lglfw.3 -lGLEW -lSOIL -framework OpenGL
+LIBS = -lglfw.3 -lGLEW -lSOIL -lfreetype -framework OpenGL
 
-OBJDIR=obj
-SRCDIR=src
+OBJDIR = obj
+SRCDIR = src
 
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
@@ -20,12 +21,12 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp Makefile
 	$(CXX) -c $(CXXFLAGS) $(INCLUDEDIRS) $< -o $@
 
 $(EXE): $(OBJS)
-	$(CXX) $(LDDIRS) $(objects) $(LIBS) -o $@
+	$(CXX) $(LDDIRS) $(OBJS) $(LIBS) -o $@
 
 $(OBJDIR)/Game.o: \
 	$(SRCDIR)/Rect.h \
 	$(SRCDIR)/ResourceManager.h \
-	$(SRCDIR)/SpriteRenderer.h
+	$(SRCDIR)/TextRenderer.h
 
 $(OBJDIR)/SquaresGame.o: \
 	$(SRCDIR)/Game.h \
@@ -33,6 +34,11 @@ $(OBJDIR)/SquaresGame.o: \
 
 $(OBJDIR)/Rect.o: \
 	$(SRCDIR)/SpriteRenderer.h \
+	$(SRCDIR)/ResourceManager.h
+
+$(OBJDIR)/TextRenderer.o: \
+	$(SRCDIR)/Shader.h \
+	$(SRCDIR)/Texture.h \
 	$(SRCDIR)/ResourceManager.h
 
 clean:

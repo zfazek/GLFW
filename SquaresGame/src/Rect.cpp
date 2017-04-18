@@ -18,11 +18,11 @@ Rect::Rect(const GLuint width, const GLuint height) : width(width), height(heigh
     float g = static_cast<float>(std::rand()) / RAND_MAX;
     float b = static_cast<float>(std::rand()) / RAND_MAX;
     color = glm::vec3(r, g, b);
-    renderer = new SpriteRenderer(ResourceManager::getShader(name));
+    spriteRenderer = new SpriteRenderer(ResourceManager::getShader(name));
 }
 
 Rect::~Rect() {
-    delete renderer;
+    delete spriteRenderer;
 }
 
 void Rect::init(const GLuint width, const GLuint height) {
@@ -58,7 +58,7 @@ void Rect::draw() const {
     const glm::vec2 position = glm::vec2(x, y);
     const glm::vec2 size = glm::vec2(side, side);
     const GLfloat rotate = 0.0f;
-    renderer->drawSprite(texture, position, size, rotate, color);
+    spriteRenderer->drawSprite(texture, position, size, rotate, color);
 }
 
 bool Rect::isInside(const double mouseX, const double mouseY) const {

@@ -19,5 +19,5 @@ class Rect {
         GLuint side;
         glm::vec3 color;
         GLuint width, height;
-        SpriteRenderer* renderer;
+        SpriteRenderer* spriteRenderer;
 };

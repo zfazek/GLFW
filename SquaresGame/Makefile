@@ -2,10 +2,10 @@ EXE = SquaresGame
 
 CXXFLAGS = -std=c++11 -g -O3
 
-LIBS=-lglfw -lGLEW -lGL -lSOIL
+LIBS = -lglfw -lGLEW -lGL -lSOIL -lfreetype
 
-OBJDIR=obj
-SRCDIR=src
+OBJDIR = obj
+SRCDIR = src
 
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
@@ -22,7 +22,7 @@ $(EXE): $(OBJS)
 $(OBJDIR)/Game.o: \
 	$(SRCDIR)/Rect.h \
 	$(SRCDIR)/ResourceManager.h \
-	$(SRCDIR)/SpriteRenderer.h
+	$(SRCDIR)/TextRenderer.h
 
 $(OBJDIR)/SquaresGame.o: \
 	$(SRCDIR)/Game.h \
@@ -30,6 +30,11 @@ $(OBJDIR)/SquaresGame.o: \
 
 $(OBJDIR)/Rect.o: \
 	$(SRCDIR)/SpriteRenderer.h \
+	$(SRCDIR)/ResourceManager.h
+
+$(OBJDIR)/TextRenderer.o: \
+	$(SRCDIR)/Shader.h \
+	$(SRCDIR)/Texture.h \
 	$(SRCDIR)/ResourceManager.h
 
 clean:
