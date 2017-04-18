@@ -21,7 +21,7 @@ public:
     void setVector3f(const GLchar *name, const glm::vec3 &value, const GLboolean useShader = false);
     void setVector4f(const GLchar *name, const GLfloat x, GLfloat y, const GLfloat z, const GLfloat w, const GLboolean useShader = false);
     void setVector4f(const GLchar *name, const glm::vec4 &value, const GLboolean useShader = false);
-    void setMatrix4(const GLchar *name, const glm::mat4 &matrix, const GLboolean useShader = false);
+    void setMatrix4fv(const GLchar *name, const glm::mat4 &matrix, const GLboolean useShader = false);
 private:
-    void    checkCompileErrors(GLuint object, const std::string& type);
+    void checkCompileErrors(const GLuint object, const std::string& type);
 };

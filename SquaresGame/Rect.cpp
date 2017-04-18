@@ -3,8 +3,9 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "SpriteRenderer.h"
 #include "ResourceManager.h"
+
+static char name[] = "rect";
 
 Rect::Rect(const GLuint width, const GLuint height) : width(width), height(height) {
     const int maxSpeed = 100;
@@ -17,9 +18,24 @@ Rect::Rect(const GLuint width, const GLuint height) : width(width), height(heigh
     float g = static_cast<float>(std::rand()) / RAND_MAX;
     float b = static_cast<float>(std::rand()) / RAND_MAX;
     color = glm::vec3(r, g, b);
+    renderer = new SpriteRenderer(ResourceManager::getShader(name));
 }
 
 Rect::~Rect() {
+    delete renderer;
+}
+
+void Rect::init(const GLuint width, const GLuint height) {
+#ifdef __APPLE__
+    ResourceManager::loadTexture("block.png", GL_TRUE, name);
+    ResourceManager::loadShader("../shaders/rect_vertex.glsl", "../shaders/rect_fragment.glsl", nullptr, name);
+#else
+    ResourceManager::loadTexture("resources/block.png", GL_TRUE, name);
+    ResourceManager::loadShader("shaders/rect_vertex.glsl", "shaders/rect_fragment.glsl", nullptr, name);
+#endif
+    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
+    ResourceManager::getShader(name).use().setInteger("image", 0);
+    ResourceManager::getShader(name).setMatrix4fv("projection", projection);
 }
 
 void Rect::update(const GLfloat dt) {
@@ -37,14 +53,14 @@ void Rect::update(const GLfloat dt) {
     }
 }
 
-void Rect::draw(SpriteRenderer* renderer) const {
-    const Texture2D& texture = ResourceManager::getTexture("face");
+void Rect::draw() const {
+    const Texture2D& texture = ResourceManager::getTexture(name);
     const glm::vec2 position = glm::vec2(x, y);
     const glm::vec2 size = glm::vec2(side, side);
     const GLfloat rotate = 0.0f;
     renderer->drawSprite(texture, position, size, rotate, color);
 }
 
-bool Rect::isInside(double mouseX, double mouseY) const {
+bool Rect::isInside(const double mouseX, const double mouseY) const {
     return mouseX > x && mouseX < x + side && mouseY > y && mouseY < y + side;
 }

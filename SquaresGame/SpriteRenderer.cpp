@@ -20,7 +20,7 @@ void SpriteRenderer::drawSprite(const Texture2D& texture, const glm::vec2 positi
 
     model = glm::scale(model, glm::vec3(size, 1.0f));
 
-    this->shader.setMatrix4("model", model);
+    this->shader.setMatrix4fv("model", model);
 
     this->shader.setVector3f("spriteColor", color);
 
