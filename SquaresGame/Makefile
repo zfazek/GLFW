@@ -1,41 +1,38 @@
+EXE = SquaresGame
+
 CXXFLAGS = -std=c++11 -g -O3
 
 LIBS=-lglfw -lGLEW -lGL -lSOIL
 
-objects = \
-	SquaresGame.o \
-	Game.o \
-	Rect.o \
-	ResourceManager.o \
-	Shader.o \
-	SpriteRenderer.o \
-	Texture.o
+OBJDIR=obj
+SRCDIR=src
 
-SquaresGame: $(objects)
-	$(CXX) $(CXXFLAGS) $(objects) $(LIBS) -o $@
+SRCS = $(wildcard $(SRCDIR)/*.cpp)
+OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
 
-SquaresGame.o: Game.h \
-	ResourceManager.h
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(SRCDIR)/%.h Makefile
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-Game.o: Game.h \
-	Rect.h \
-	ResourceManager.h \
-	SpriteRenderer.h
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp Makefile
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-Rect.o: Rect.h \
-	SpriteRenderer.h \
-	ResourceManager.h
+$(EXE): $(OBJS)
+	$(CXX) $(OBJS) $(LIBS) -o $@
 
-ResourceManager.o: ResourceManager.h
+$(OBJDIR)/Game.o: \
+	$(SRCDIR)/Rect.h \
+	$(SRCDIR)/ResourceManager.h \
+	$(SRCDIR)/SpriteRenderer.h
 
-Shader.o: Shader.h
+$(OBJDIR)/SquaresGame.o: \
+	$(SRCDIR)/Game.h \
+	$(SRCDIR)/ResourceManager.h
 
-SpriteRenderer.o: SpriteRenderer.h
-
-Texture.o: Texture.h
+$(OBJDIR)/Rect.o: \
+	$(SRCDIR)/SpriteRenderer.h \
+	$(SRCDIR)/ResourceManager.h
 
 clean:
-	rm -rf $(objects) SquaresGame
+	rm -rf $(OBJS) $(EXE)
 
 .PHONY: clean
-
