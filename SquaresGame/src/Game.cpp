@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
@@ -22,9 +23,9 @@ void Game::init() {
     Rect::init(width, height);
     textRenderer = new TextRenderer(width, height);
 #ifdef __APPLE__
-    textRenderer->load("ocraext.ttf", 24);
+    textRenderer->load("ocraext.ttf", 48);
 #else
-    textRenderer->load("resources/ocraext.ttf", 24);
+    textRenderer->load("resources/ocraext.ttf", 48);
 #endif
 }
 
@@ -65,8 +66,9 @@ void Game::render() const {
             rect->draw();
         }
     } else if (state == GameState::GAME_WIN) {
-        const std::string text = "You clicked " + std::to_string(count) + " times.";
-        textRenderer->renderText(text, 10, 10, 4);
+        char text[128];
+        snprintf(text, 128, "You clicked %d times.", count);
+        textRenderer->renderText(text, 10, 10, 1);
     }
 }
 

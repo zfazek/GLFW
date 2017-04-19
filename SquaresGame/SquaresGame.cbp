@@ -23,6 +23,7 @@
 					<Add library="opengl32" />
 					<Add library="glfw3" />
 					<Add library="gdi32" />
+					<Add library="freetype" />
 					<Add directory="C:/usr/local/lib" />
 				</Linker>
 			</Target>
@@ -44,6 +45,7 @@
 					<Add library="opengl32" />
 					<Add library="glfw3" />
 					<Add library="gdi32" />
+					<Add library="freetype" />
 					<Add directory="C:/usr/local/lib" />
 				</Linker>
 			</Target>
@@ -52,19 +54,21 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Game.cpp" />
-		<Unit filename="Game.h" />
-		<Unit filename="Rect.cpp" />
-		<Unit filename="Rect.h" />
-		<Unit filename="ResourceManager.cpp" />
-		<Unit filename="ResourceManager.h" />
-		<Unit filename="Shader.cpp" />
-		<Unit filename="Shader.h" />
-		<Unit filename="SpriteRenderer.cpp" />
-		<Unit filename="SpriteRenderer.h" />
-		<Unit filename="SquaresGame.cpp" />
-		<Unit filename="Texture.cpp" />
-		<Unit filename="Texture.h" />
+		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/Game.h" />
+		<Unit filename="src/Rect.cpp" />
+		<Unit filename="src/Rect.h" />
+		<Unit filename="src/ResourceManager.cpp" />
+		<Unit filename="src/ResourceManager.h" />
+		<Unit filename="src/Shader.cpp" />
+		<Unit filename="src/Shader.h" />
+		<Unit filename="src/SpriteRenderer.cpp" />
+		<Unit filename="src/SpriteRenderer.h" />
+		<Unit filename="src/SquaresGame.cpp" />
+		<Unit filename="src/TextRenderer.cpp" />
+		<Unit filename="src/TextRenderer.h" />
+		<Unit filename="src/Texture.cpp" />
+		<Unit filename="src/Texture.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
