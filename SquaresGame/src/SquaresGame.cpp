@@ -1,16 +1,11 @@
 #include <iostream>
 
-#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "Game.h"
-#include "ResourceManager.h"
 
-const GLuint SCREEN_WIDTH = 1600;
-const GLuint SCREEN_HEIGHT = 800;
-
-Game game(SCREEN_WIDTH, SCREEN_HEIGHT);
+Game game;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
@@ -42,7 +37,9 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Squares Game", nullptr, nullptr);
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+    GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Squares Game", monitor, nullptr);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -52,11 +49,15 @@ int main(int argc, char *argv[]) {
     glfwSetKeyCallback(window, key_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
 
-    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    glViewport(0, 0, width, height);
     glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    game.width = mode->width;
+    game.height = mode->height;
     game.init();
     game.create();
 
@@ -77,8 +78,6 @@ int main(int argc, char *argv[]) {
         game.render();
         glfwSwapBuffers(window);
     }
-
-    ResourceManager::clear();
 
     glfwTerminate();
     return 0;

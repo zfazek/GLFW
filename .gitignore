@@ -39,3 +39,4 @@ Release/
 *.depend
 *.layout
 *.cscope_file_list
+/Default/

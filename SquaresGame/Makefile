@@ -1,6 +1,6 @@
 EXE = SquaresGame
 
-CXXFLAGS = -std=c++11 -g -O3
+CXXFLAGS = -std=c++11 -g -O3 -DGLEW_STATIC
 
 INCLUDEDIRS = -I/usr/include/freetype2
 

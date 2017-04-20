@@ -59,7 +59,7 @@ Shader ResourceManager::loadShaderFromFile(const GLchar *vShaderFile, const GLch
             geometryCode = gShaderStream.str();
         }
     }
-    catch (std::exception e) {
+    catch (std::exception& e) {
         std::cout << "ERROR::SHADER: Failed to read shader files" << std::endl;
     }
     const GLchar *vShaderCode = vertexCode.c_str();

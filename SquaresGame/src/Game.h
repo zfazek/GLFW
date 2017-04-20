@@ -24,7 +24,7 @@ class Game {
         std::set<Rect*> rects;
         TextRenderer* textRenderer;
 
-        Game(const GLuint width, const GLuint height);
+        Game();
         ~Game();
 
         void init();

@@ -8,7 +8,7 @@
 #include "Rect.h"
 #include "ResourceManager.h"
 
-Game::Game(const GLuint width, const GLuint height) : state(GameState::GAME_ACTIVE), keys(), width(width), height(height) {
+Game::Game() : state(GameState::GAME_ACTIVE), keys{} {
     srand(std::time(0));
 }
 
@@ -17,6 +17,7 @@ Game::~Game() {
         delete rect;
     }
     delete textRenderer;
+    ResourceManager::clear();
 }
 
 void Game::init() {
