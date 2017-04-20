@@ -30,8 +30,7 @@ $(OBJDIR)/Game.o: \
 	$(SRCDIR)/TextRenderer.h
 
 $(OBJDIR)/SquaresGame.o: \
-	$(SRCDIR)/Game.h \
-	$(SRCDIR)/ResourceManager.h
+	$(SRCDIR)/Game.h
 
 $(OBJDIR)/Rect.o: \
 	$(SRCDIR)/SpriteRenderer.h \

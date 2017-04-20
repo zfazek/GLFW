@@ -8,25 +8,11 @@
 Game game;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-    if (key >= 0 && key < 1024) {
-        if (action == GLFW_PRESS) {
-            game.keys[key] = GL_TRUE;
-        }
-        else if (action == GLFW_RELEASE) {
-            game.keys[key] = GL_FALSE;
-        }
-    }
+	game.key_callback(window, key, scancode, action, mode);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
-    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        game.checkMouseClick(xpos, ypos);
-    }
+	game.mouse_button_callback(window, button, action, mods);
 }
 
 int main(int argc, char *argv[]) {
@@ -45,7 +31,6 @@ int main(int argc, char *argv[]) {
     glewExperimental = GL_TRUE;
     glewInit();
     glGetError();
-
     glfwSetKeyCallback(window, key_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
 
@@ -56,28 +41,8 @@ int main(int argc, char *argv[]) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    game.width = mode->width;
-    game.height = mode->height;
-    game.init();
-    game.create();
-
-    GLfloat deltaTime = 0.0f;
-    GLfloat lastFrame = 0.0f;
-
-    game.state = GameState::GAME_ACTIVE;
-    game.changeBackground();
-
-    while (!glfwWindowShouldClose(window)) {
-        GLfloat currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
-        glfwPollEvents();
-        game.processInput(deltaTime);
-        game.update(deltaTime);
-        game.clearBackground();
-        game.render();
-        glfwSwapBuffers(window);
-    }
+    game.init(mode);
+    game.loop(window);
 
     glfwTerminate();
     return 0;
