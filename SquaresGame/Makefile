@@ -21,12 +21,17 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp Makefile
 $(EXE): $(OBJS)
 	$(CXX) $(OBJS) $(LIBS) -o $@
 
+$(OBJDIR)/GameBase.o: \
+	$(SRCDIR)/ResourceManager.h
+
 $(OBJDIR)/Game.o: \
+	$(SRCDIR)/GameBase.h \
 	$(SRCDIR)/Rect.h \
 	$(SRCDIR)/ResourceManager.h \
 	$(SRCDIR)/TextRenderer.h
 
 $(OBJDIR)/SquaresGame.o: \
+	$(SRCDIR)/GameBase.h \
 	$(SRCDIR)/Game.h
 
 $(OBJDIR)/Rect.o: \

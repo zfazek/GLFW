@@ -1,5 +1,6 @@
 #include "SpriteRenderer.h"
 
+#include "Shader.h"
 #include "Texture.h"
 
 SpriteRenderer::SpriteRenderer(const Shader& shader) : shader(shader), quadVAO{0} {

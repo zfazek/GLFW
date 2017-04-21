@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "SpriteRenderer.h"
+class SpriteRenderer;
 
 class Rect {
     public:

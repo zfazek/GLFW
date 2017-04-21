@@ -24,22 +24,27 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp Makefile
 $(EXE): $(OBJS)
 	$(CXX) $(LDDIRS) $(OBJS) $(LIBS) -o $@
 
+$(OBJDIR)/GameBase.o: \
+    $(SRCDIR)/ResourceManager.h
+
 $(OBJDIR)/Game.o: \
-	$(SRCDIR)/Rect.h \
-	$(SRCDIR)/ResourceManager.h \
-	$(SRCDIR)/TextRenderer.h
+    $(SRCDIR)/GameBase.h \
+    $(SRCDIR)/Rect.h \
+    $(SRCDIR)/ResourceManager.h \
+    $(SRCDIR)/TextRenderer.h
 
 $(OBJDIR)/SquaresGame.o: \
-	$(SRCDIR)/Game.h
+    $(SRCDIR)/GameBase.h \
+    $(SRCDIR)/Game.h
 
 $(OBJDIR)/Rect.o: \
-	$(SRCDIR)/SpriteRenderer.h \
-	$(SRCDIR)/ResourceManager.h
+    $(SRCDIR)/SpriteRenderer.h \
+    $(SRCDIR)/ResourceManager.h
 
 $(OBJDIR)/TextRenderer.o: \
-	$(SRCDIR)/Shader.h \
-	$(SRCDIR)/Texture.h \
-	$(SRCDIR)/ResourceManager.h
+    $(SRCDIR)/Shader.h \
+    $(SRCDIR)/Texture.h \
+    $(SRCDIR)/ResourceManager.h
 
 clean:
 	rm -rf $(OBJS) $(EXE)

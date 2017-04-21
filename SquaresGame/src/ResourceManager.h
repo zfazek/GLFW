@@ -5,8 +5,8 @@
 
 #include <GL/glew.h>
 
-#include "Texture.h"
-#include "Shader.h"
+class Shader;
+class Texture2D;
 
 class ResourceManager {
 public:

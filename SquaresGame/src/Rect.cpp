@@ -4,6 +4,7 @@
 #include <cstdlib>
 
 #include "ResourceManager.h"
+#include "SpriteRenderer.h"
 
 static char name[] = "rect";
 

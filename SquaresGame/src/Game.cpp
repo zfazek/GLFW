@@ -6,9 +6,9 @@
 #include <iostream>
 
 #include "Rect.h"
-#include "ResourceManager.h"
+#include "TextRenderer.h"
 
-Game::Game() : state(GameState::GAME_ACTIVE), keys{} {
+Game::Game() {
 	srand(std::time(0));
 }
 
@@ -17,7 +17,6 @@ Game::~Game() {
 		delete rect;
 	}
 	delete textRenderer;
-	ResourceManager::clear();
 }
 
 void Game::init(const GLFWvidmode* mode) {
@@ -28,39 +27,20 @@ void Game::init(const GLFWvidmode* mode) {
 	create();
 	state = GameState::GAME_ACTIVE;
 	changeBackground();
-
 #ifdef __APPLE__
 	textRenderer->load("ocraext.ttf", 48);
 #else
 	textRenderer->load("resources/ocraext.ttf", 48);
 #endif
-
 }
 
 void Game::create() {
 	count = 0;
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 2; i++) {
 		Rect* rect = new Rect(width, height);
 		rects.insert(rect);
 	}
 	state = GameState::GAME_ACTIVE;
-}
-
-void Game::loop(GLFWwindow* window) {
-	GLfloat deltaTime = 0.0f;
-	GLfloat lastFrame = 0.0f;
-
-	while (!glfwWindowShouldClose(window)) {
-		GLfloat currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-		glfwPollEvents();
-		processInput(deltaTime);
-		update(deltaTime);
-		clearBackground();
-		render();
-		glfwSwapBuffers(window);
-	}
 }
 
 void Game::update(const GLfloat dt) {
@@ -78,11 +58,6 @@ void Game::changeBackground() {
 	r = static_cast<GLfloat>(std::rand()) / RAND_MAX;
 	g = static_cast<GLfloat>(std::rand()) / RAND_MAX;
 	b = static_cast<GLfloat>(std::rand()) / RAND_MAX;
-}
-
-void Game::clearBackground() const {
-	glClearColor(r, g, b, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void Game::render() const {
@@ -124,20 +99,6 @@ void Game::checkMouseClick(const double mouseX, const double mouseY) {
 		checkMissed(mouseX, mouseY);
 		if (rects.size() == 0) {
 			state = GameState::GAME_WIN;
-		}
-	}
-}
-
-void Game::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, GL_TRUE);
-	}
-	if (key >= 0 && key < 1024) {
-		if (action == GLFW_PRESS) {
-			keys[key] = GL_TRUE;
-		}
-		else if (action == GLFW_RELEASE) {
-			keys[key] = GL_FALSE;
 		}
 	}
 }

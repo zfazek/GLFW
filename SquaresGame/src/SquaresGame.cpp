@@ -5,14 +5,14 @@
 
 #include "Game.h"
 
-Game game;
+GameBase* game = new Game();
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	game.key_callback(window, key, scancode, action, mode);
+	game->key_callback(window, key, scancode, action, mode);
 }
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
-	game.mouse_button_callback(window, button, action, mods);
+	game->mouse_button_callback(window, button, action, mods);
 }
 
 int main(int argc, char *argv[]) {
@@ -41,8 +41,9 @@ int main(int argc, char *argv[]) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    game.init(mode);
-    game.loop(window);
+    game->init(mode);
+    game->loop(window);
+    delete game;
 
     glfwTerminate();
     return 0;

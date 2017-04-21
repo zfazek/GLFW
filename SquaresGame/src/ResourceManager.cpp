@@ -6,6 +6,9 @@
 
 #include <SOIL/SOIL.h>
 
+#include "Texture.h"
+#include "Shader.h"
+
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;
 
