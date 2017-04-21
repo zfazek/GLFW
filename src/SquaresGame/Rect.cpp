@@ -5,6 +5,7 @@
 
 #include "ResourceManager.h"
 #include "SpriteRenderer.h"
+#include "Texture.h"
 
 static char name[] = "rect";
 
@@ -27,13 +28,8 @@ Rect::~Rect() {
 }
 
 void Rect::init(const GLuint width, const GLuint height) {
-#ifdef __APPLE__
-    ResourceManager::loadTexture("block.png", GL_TRUE, name);
-    ResourceManager::loadShader("../shaders/rect_vertex.glsl", "../shaders/rect_fragment.glsl", nullptr, name);
-#else
     ResourceManager::loadTexture("resources/block.png", GL_TRUE, name);
     ResourceManager::loadShader("shaders/rect_vertex.glsl", "shaders/rect_fragment.glsl", nullptr, name);
-#endif
     glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
     ResourceManager::getShader(name).use().setInteger("image", 0);
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);

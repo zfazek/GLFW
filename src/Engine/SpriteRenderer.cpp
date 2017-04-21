@@ -1,6 +1,5 @@
 #include "SpriteRenderer.h"
 
-#include "Shader.h"
 #include "Texture.h"
 
 SpriteRenderer::SpriteRenderer(const Shader& shader) : shader(shader), quadVAO{0} {
@@ -12,7 +11,7 @@ SpriteRenderer::~SpriteRenderer() {
 }
 
 void SpriteRenderer::drawSprite(const Texture2D& texture, const glm::vec2 position,
-		const glm::vec2 size, const GLfloat rotate, const glm::vec3 color) {
+        const glm::vec2 size, const GLfloat rotate, const glm::vec3 color) {
     shader.use();
     glm::mat4 model;
     model = glm::translate(model, glm::vec3(position, 0.0f));

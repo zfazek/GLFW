@@ -10,11 +10,7 @@
 static char name[] = "text";
 
 TextRenderer::TextRenderer(const GLuint width, const GLuint height) {
-#ifdef __APPLE__
-    this->textShader = ResourceManager::loadShader("../shaders/text_vertex.glsl", "../shaders/text_fragment.glsl", nullptr, name);
-#else
     this->textShader = ResourceManager::loadShader("shaders/text_vertex.glsl", "shaders/text_fragment.glsl", nullptr, name);
-#endif
     this->textShader.setMatrix4fv("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f), GL_TRUE);
     this->textShader.setInteger(name, 0);
     glGenVertexArrays(1, &this->VAO);
