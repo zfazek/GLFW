@@ -4,7 +4,7 @@
 
 #include "ResourceManager.h"
 
-GameBase::GameBase() {
+GameBase::GameBase() : keys{}{
 }
 
 GameBase::~GameBase() {
