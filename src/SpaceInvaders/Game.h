@@ -27,4 +27,5 @@ public:
     void render() const;
     void checkMouseClick(const double mouseX, const double mouseY);
     void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+    bool isCollided(const std::set<Bullet*>::iterator itBullet, const std::set<Droid*>::iterator itDroid) const;
 };

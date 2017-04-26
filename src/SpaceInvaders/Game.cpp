@@ -32,20 +32,28 @@ void Game::init(const GLFWvidmode* mode) {
     Bullet::init(width, height);
     Droid::init(width, height);
     textRenderer = new TextRenderer(width, height);
-    lastBulletFrame = 0;
     create();
     state = GameState::GAME_ACTIVE;
     changeBackground();
     textRenderer->load("resources/ocraext.ttf", 48);
+    ship = new Ship(width, height);
 }
 
 void Game::create() {
     count = 0;
-    ship = new Ship(width, height);
-    for (size_t i = 0; i < 50; i++) {
-        Droid* droid = new Droid(1, width, height);
-        droids.insert(droid);
+    bullets.clear();
+    droids.clear();
+    const GLfloat spanX = 100;
+    const GLfloat spanY = 50;
+    const size_t n_x = width / (spanX + 100);
+    const size_t n_y = height / 2 / (spanY + 100);
+    for (size_t i = 0; i < n_y; i++) {
+        for (size_t j = 0; j < n_x; j++) {
+            Droid* droid = new Droid(1, width, height, j * (spanX + 100), i * (spanY + 100));
+            droids.insert(droid);
+        }
     }
+    lastBulletFrame = glfwGetTime();
     state = GameState::GAME_ACTIVE;
 }
 
@@ -55,30 +63,58 @@ void Game::update(const GLfloat dt) {
         for (const auto& droid : droids) {
             droid->update(dt);
         }
-        std::set<Bullet*>::iterator it;
-        for (it = bullets.begin(); it != bullets.end();) {
-            (*it)->update(dt);
-            if ((*it)->y < -100) {
-                bullets.erase(it++);
+        std::set<Bullet*>::iterator itBullet;
+        std::set<Droid*>::iterator itDroid;
+        for (itBullet = bullets.begin(); itBullet != bullets.end();) {
+            (*itBullet)->update(dt);
+            if ((*itBullet)->y < -100) {
+                bullets.erase(itBullet++);
             } else {
-                ++it;
+                ++itBullet;
             }
+        }
+        bool collided = false;
+        for (itBullet = bullets.begin(); itBullet != bullets.end();) {
+            for (itDroid = droids.begin(); itDroid != droids.end();) {
+                collided = isCollided(itBullet, itDroid);
+                if (collided) {
+                    droids.erase(itDroid);
+                    itDroid = droids.end();
+                } else {
+                    ++itDroid;
+                }
+            }
+            if (collided) {
+                bullets.erase(itBullet++);
+            } else {
+                ++itBullet;
+            }
+        }
+        if (droids.size() == 0) {
+            state = GameState::GAME_WIN;
         }
     }
 }
 
 void Game::processInput(const GLfloat dt) {
-    if (keys[GLFW_KEY_LEFT]) {
-        ship->x -= ship->speed * dt;
-    }
-    if (keys[GLFW_KEY_RIGHT]) {
-        ship->x += ship->speed * dt;
-    }
-    if (keys[GLFW_KEY_SPACE]) {
-        GLfloat currentFrame = glfwGetTime();
-        if (currentFrame - lastBulletFrame > 1) {
-            bullets.insert(new Bullet(width, height, ship->x + ship->side / 2, ship->side));
-            lastBulletFrame = currentFrame;
+    if (state == GameState::GAME_ACTIVE) {
+        if (keys[GLFW_KEY_LEFT]) {
+            ship->x -= ship->speed * dt;
+        }
+        if (keys[GLFW_KEY_RIGHT]) {
+            ship->x += ship->speed * dt;
+        }
+        if (keys[GLFW_KEY_SPACE]) {
+            GLfloat currentFrame = glfwGetTime();
+            if (currentFrame - lastBulletFrame > 1) {
+                count++;
+                bullets.insert(new Bullet(width, height, ship->x + ship->side / 2, ship->side));
+                lastBulletFrame = currentFrame;
+            }
+        }
+    } else if (state == GameState::GAME_WIN) {
+        if (keys[GLFW_KEY_SPACE]) {
+            create();
         }
     }
 }
@@ -87,9 +123,6 @@ void Game::changeBackground() {
     r = static_cast<GLfloat>(std::rand()) / RAND_MAX;
     g = static_cast<GLfloat>(std::rand()) / RAND_MAX;
     b = static_cast<GLfloat>(std::rand()) / RAND_MAX;
-    //r = 0.1f;
-    //g = 0.1f;
-    //b = 0.1f;
 }
 
 void Game::render() const {
@@ -103,7 +136,7 @@ void Game::render() const {
         }
     } else if (state == GameState::GAME_WIN) {
         char text[128];
-        snprintf(text, 128, "You clicked %d times.", count);
+        snprintf(text, 128, "You shot %d times.", count);
         textRenderer->renderText(text, 10, 10, 1);
     }
 }
@@ -118,4 +151,17 @@ void Game::mouse_button_callback(GLFWwindow* window, int button, int action, int
         glfwGetCursorPos(window, &xpos, &ypos);
         checkMouseClick(xpos, ypos);
     }
+}
+
+bool Game::isCollided(const std::set<Bullet*>::iterator itBullet, const std::set<Droid*>::iterator itDroid) const {
+    const Bullet* b = *itBullet;
+    const Droid* d = *itDroid;
+    bool xCollision = false;
+    bool yCollision = false;
+    if (b->x > d->x && b->x < d->x + d->side) xCollision = true;
+    if (b->x + b->side > d->x && b->x + b->side< d->x + d->side) xCollision = true;
+    if (b->y > d->y && b->y < d->y + d->side) yCollision = true;
+    if (b->y + b->side > d->y && b->y + b->side< d->y + d->side) yCollision = true;
+    return xCollision && yCollision;
+
 }

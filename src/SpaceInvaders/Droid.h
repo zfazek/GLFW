@@ -7,7 +7,7 @@ class SpriteRenderer;
 
 class Droid {
     public:
-        Droid(const GLuint idx, const GLuint width, const GLuint height);
+        Droid(const GLuint idx, const GLuint width, const GLuint height, const GLfloat x, const GLfloat y);
         ~Droid();
         void update(const GLfloat dt);
         void draw() const;

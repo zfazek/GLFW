@@ -9,10 +9,8 @@
 
 static char name[] = "droid";
 
-Droid::Droid(const GLuint idx, const GLuint width, const GLuint height) : idx(idx), width(width), height(height) {
+Droid::Droid(const GLuint idx, const GLuint width, const GLuint height, GLfloat x, GLfloat y) : idx(idx), width(width), height(height), x(x), y(y) {
     side = 100;
-    x = (std::rand() % (width - side)) / side * side;
-    y = (std::rand() % (height - 4 * side)) / side * side;
     float r = 1.0f;
     float g = 1.0f;
     float b = 1.0f;
