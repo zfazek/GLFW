@@ -9,13 +9,11 @@ OS := $(shell uname)
 ifeq ($(OS),Darwin)
 INCLUDEDIRS= -I/usr/local/include \
  -I/usr/local/include/freetype2 \
- -Isrc/Engine \
- -Isrc/SquaresGame
+ -Isrc/Engine
 LIBS = -lglfw.3 -lGLEW -lSOIL -lfreetype -framework OpenGL
 else
 INCLUDEDIRS = -I/usr/include/freetype2 \
- -Isrc/Engine \
- -Isrc/SquaresGame
+ -Isrc/Engine
 LIBS = -lglfw -lGLEW -lGL -lSOIL -lfreetype
 endif
 
