@@ -1,14 +1,14 @@
 SQUARES_EXE = Squares
-SP_INV_EXE = SpaceInvaders
-CUBE_EXE = Cube
+SP_INV_EXE  = SpaceInvaders
+CUBE_EXE    = Cube
 
-CXXFLAGS = -std=c++11 -g -O3 -DGLEW_STATIC
+CXXFLAGS    = -std=c++11 -g -O3 -DGLEW_STATIC
 
-LDDIRS = -L/usr/local/lib
+LDDIRS      = -L/usr/local/lib
 
 OS := $(shell uname)
 ifeq ($(OS),Darwin)
-INCLUDEDIRS= -I/usr/local/include \
+INCLUDEDIRS = -I/usr/local/include \
  -I/usr/local/include/freetype2 \
  -Isrc/Engine
 LIBS = -lglfw.3 -lGLEW -lSOIL -lfreetype -framework OpenGL
@@ -20,44 +20,32 @@ endif
 
 SQUARES_SRCDIR = src/SquaresGame
 SQUARES_OBJDIR = obj/SquaresGame
-SP_INV_SRCDIR = src/SpaceInvaders
-SP_INV_OBJDIR = obj/SpaceInvaders
-CUBE_SRCDIR = src/Cube
-CUBE_OBJDIR = obj/Cube
-ENGINE_SRCDIR = src/Engine
-ENGINE_OBJDIR = obj/Engine
+SP_INV_SRCDIR  = src/SpaceInvaders
+SP_INV_OBJDIR  = obj/SpaceInvaders
+CUBE_SRCDIR    = src/Cube
+CUBE_OBJDIR    = obj/Cube
+ENGINE_SRCDIR  = src/Engine
+ENGINE_OBJDIR  = obj/Engine
 
-SQUARES_SRCS = $(wildcard $(SQUARES_SRCDIR)/*.cpp)
-SQUARES_OBJS = $(patsubst $(SQUARES_SRCDIR)/%.cpp, $(SQUARES_OBJDIR)/%.o, $(SQUARES_SRCS))
-SP_INV_SRCS = $(wildcard $(SP_INV_SRCDIR)/*.cpp)
-SP_INV_OBJS = $(patsubst $(SP_INV_SRCDIR)/%.cpp, $(SP_INV_OBJDIR)/%.o, $(SP_INV_SRCS))
-CUBE_SRCS = $(wildcard $(CUBE_SRCDIR)/*.cpp)
-CUBE_OBJS = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRCS))
-ENGINE_SRCS = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
-ENGINE_OBJS = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
+SQUARES_SRCS   = $(wildcard $(SQUARES_SRCDIR)/*.cpp)
+SQUARES_OBJS   = $(patsubst $(SQUARES_SRCDIR)/%.cpp, $(SQUARES_OBJDIR)/%.o, $(SQUARES_SRCS))
+SP_INV_SRCS    = $(wildcard $(SP_INV_SRCDIR)/*.cpp)
+SP_INV_OBJS    = $(patsubst $(SP_INV_SRCDIR)/%.cpp, $(SP_INV_OBJDIR)/%.o, $(SP_INV_SRCS))
+CUBE_SRCS      = $(wildcard $(CUBE_SRCDIR)/*.cpp)
+CUBE_OBJS      = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRCS))
+ENGINE_SRCS    = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
+ENGINE_OBJS    = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
 
 $(SQUARES_OBJDIR)/%.o: $(SQUARES_SRCDIR)/%.cpp $(SQUARES_SRCDIR)/%.h Makefile
-	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
-
-$(SQUARES_OBJDIR)/%.o: $(SQUARES_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
 $(SP_INV_OBJDIR)/%.o: $(SP_INV_SRCDIR)/%.cpp $(SP_INV_SRCDIR)/%.h Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
-$(SP_INV_OBJDIR)/%.o: $(SP_INV_SRCDIR)/%.cpp Makefile
-	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
-
 $(CUBE_OBJDIR)/%.o: $(CUBE_SRCDIR)/%.cpp $(CUBE_SRCDIR)/%.h Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
-$(CUBE_OBJDIR)/%.o: $(CUBE_SRCDIR)/%.cpp Makefile
-	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
-
 $(ENGINE_OBJDIR)/%.o: $(ENGINE_SRCDIR)/%.cpp $(ENGINE_SRCDIR)/%.h Makefile
-	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
-
-$(ENGINE_OBJDIR)/%.o: $(ENGINE_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
 $(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
