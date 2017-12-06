@@ -10,7 +10,7 @@ class Shader {
 public:
     GLuint ID;
     Shader() { }
-    Shader  &use();
+    void use();
 
     void compile(const GLchar *vertexSource, const GLchar *fragmentSource, const GLchar *geometrySource = nullptr);
     void setFloat(const GLchar *name, const GLfloat value, const GLboolean useShader = false);

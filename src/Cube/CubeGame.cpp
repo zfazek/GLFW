@@ -50,6 +50,7 @@ int main(int argc, char *argv[]) {
 
     game->init(mode);
 
+    /*
     // build and compile our shader zprogram
     // ------------------------------------
     Shader ourShader("shaders/3d_vertex.glsl", "shaders/3d_fragment.glsl");
@@ -137,6 +138,7 @@ int main(int argc, char *argv[]) {
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    */
 
     game->loop(window);
     delete game;

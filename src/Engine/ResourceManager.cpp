@@ -17,7 +17,7 @@ ResourceManager::ResourceManager() {
 
 Shader ResourceManager::loadShader(const GLchar* vShaderFile, const GLchar* fShaderFile, const GLchar* gShaderFile, const std::string& name) {
     shaders[name] = loadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
-    return shaders[name];
+    return shaders.at(name);
 }
 
 Shader ResourceManager::getShader(const std::string& name) {
@@ -26,7 +26,7 @@ Shader ResourceManager::getShader(const std::string& name) {
 
 Texture2D ResourceManager::loadTexture(const GLchar* file, const GLboolean alpha, const std::string& name) {
     textures[name] = loadTextureFromFile(file, alpha);
-    return textures[name];
+    return textures.at(name);
 }
 
 Texture2D ResourceManager::getTexture(const std::string& name) {

@@ -35,7 +35,8 @@ void Cube::init(const GLuint width, const GLuint height) {
     //glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(width) / static_cast<GLfloat>(height), 0.1f, 100.0f);
     glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    ResourceManager::getShader(name).use().setInteger("image", 0);
+    //ResourceManager::getShader(name).use();
+    ResourceManager::getShader(name).setInteger("image", 0);
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
     ResourceManager::getShader(name).setMatrix4fv("view", view);
 }

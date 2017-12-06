@@ -34,6 +34,7 @@ void Game::create() {
 
 void Game::update(const GLfloat dt) {
     if (state == GameState::GAME_ACTIVE) {
+        //cube->update(dt);
     }
 }
 
@@ -48,9 +49,11 @@ void Game::changeBackground() {
 
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
+        /*
         char text[128];
         snprintf(text, 128, "Text is working");
         textRenderer->renderText(text, 10, 10, 1);
+        */
         cube->draw();
     } else if (state == GameState::GAME_WIN) {
     }
