@@ -10,7 +10,7 @@ class TextRenderer;
 class Game : public GameBase {
 public:
     std::set<Rect*> rects;
-    GLuint count;
+    int count;
 
     Game();
     ~Game();

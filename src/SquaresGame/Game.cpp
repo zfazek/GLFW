@@ -25,7 +25,6 @@ void Game::init(const GLFWvidmode* mode) {
     Rect::init(width, height);
     textRenderer = new TextRenderer(width, height);
     create();
-    state = GameState::GAME_ACTIVE;
     changeBackground();
     textRenderer->load("resources/ocraext.ttf", 48);
 }

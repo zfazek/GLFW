@@ -12,9 +12,9 @@ static char name[] = "cube";
 Cube::Cube(const GLuint width, const GLuint height) : width(width), height(height) {
     const int maxSpeed = 100;
     side = std::rand() % 100 + 100;
-    x = std::rand() % (width - side);
-    y = std::rand() % (height - side);
-    z = 0.0f;
+    //x = std::rand() % (width - side);
+    //y = std::rand() % (height - side);
+    x = y = z = 0.0f;
     dx = 2 * (std::rand() % maxSpeed) - maxSpeed;
     dy = 2 * (std::rand() % maxSpeed) - maxSpeed;
     dz = 0.0f;
@@ -32,9 +32,12 @@ Cube::~Cube() {
 void Cube::init(const GLuint width, const GLuint height) {
     ResourceManager::loadTexture("resources/block.png", GL_TRUE, name);
     ResourceManager::loadShader("shaders/3d_vertex.glsl", "shaders/3d_fragment.glsl", nullptr, name);
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
+    //glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(width) / static_cast<GLfloat>(height), 0.1f, 100.0f);
+    glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
     ResourceManager::getShader(name).use().setInteger("image", 0);
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
+    ResourceManager::getShader(name).setMatrix4fv("view", view);
 }
 
 void Cube::update(const GLfloat dt) {

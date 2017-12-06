@@ -3,10 +3,12 @@
 #include "GameBase.h"
 
 class TextRenderer;
+class Cube;
 
 class Game : public GameBase {
 public:
-    GLuint count;
+    int count;
+    Cube* cube;
 
     Game();
     ~Game();

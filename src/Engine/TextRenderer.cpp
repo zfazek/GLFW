@@ -10,13 +10,13 @@
 static char name[] = "text";
 
 TextRenderer::TextRenderer(const GLuint width, const GLuint height) {
-    this->textShader = ResourceManager::loadShader("shaders/text_vertex.glsl", "shaders/text_fragment.glsl", nullptr, name);
-    this->textShader.setMatrix4fv("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f), GL_TRUE);
-    this->textShader.setInteger(name, 0);
-    glGenVertexArrays(1, &this->VAO);
-    glGenBuffers(1, &this->VBO);
-    glBindVertexArray(this->VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+    textShader = ResourceManager::loadShader("shaders/text_vertex.glsl", "shaders/text_fragment.glsl", nullptr, name);
+    textShader.setMatrix4fv("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f), GL_TRUE);
+    textShader.setInteger(name, 0);
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
@@ -25,7 +25,7 @@ TextRenderer::TextRenderer(const GLuint width, const GLuint height) {
 }
 
 void TextRenderer::load(const std::string& font, const GLuint fontSize) {
-    this->characters.clear();
+    characters.clear();
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
         std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
@@ -72,17 +72,17 @@ void TextRenderer::load(const std::string& font, const GLuint fontSize) {
 }
 
 void TextRenderer::renderText(const std::string& text, GLfloat x, const GLfloat y, const GLfloat scale, const glm::vec3 color) {
-    this->textShader.use();
-    this->textShader.setVector3f("textColor", color);
+    textShader.use();
+    textShader.setVector3f("textColor", color);
     glActiveTexture(GL_TEXTURE0);
-    glBindVertexArray(this->VAO);
+    glBindVertexArray(VAO);
 
     std::string::const_iterator c;
     for (c = text.begin(); c != text.end(); c++) {
         Character ch = characters[*c];
 
         GLfloat xpos = x + ch.bearing.x * scale;
-        GLfloat ypos = y + (this->characters['H'].bearing.y - ch.bearing.y) * scale;
+        GLfloat ypos = y + (characters['H'].bearing.y - ch.bearing.y) * scale;
 
         GLfloat w = ch.size.x * scale;
         GLfloat h = ch.size.y * scale;
@@ -96,7 +96,7 @@ void TextRenderer::renderText(const std::string& text, GLfloat x, const GLfloat 
             { xpos + w, ypos,       1.0, 0.0 }
         };
         glBindTexture(GL_TEXTURE_2D, ch.textureID);
-        glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);

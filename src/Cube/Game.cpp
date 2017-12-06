@@ -5,6 +5,7 @@
 #include <ctime>
 #include <iostream>
 
+#include "Cube.h"
 #include "TextRenderer.h"
 
 Game::Game() {
@@ -12,15 +13,17 @@ Game::Game() {
 }
 
 Game::~Game() {
+    delete cube;
     delete textRenderer;
 }
 
 void Game::init(const GLFWvidmode* mode) {
     width = mode->width;
     height = mode->height;
+    Cube::init(width, height);
+    cube = new Cube(width, height);
     textRenderer = new TextRenderer(width, height);
     create();
-    state = GameState::GAME_ACTIVE;
     changeBackground();
     textRenderer->load("resources/ocraext.ttf", 48);
 }
@@ -45,6 +48,10 @@ void Game::changeBackground() {
 
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
+        char text[128];
+        snprintf(text, 128, "Text is working");
+        textRenderer->renderText(text, 10, 10, 1);
+        cube->draw();
     } else if (state == GameState::GAME_WIN) {
     }
 }

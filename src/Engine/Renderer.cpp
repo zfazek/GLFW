@@ -16,11 +16,11 @@ void Renderer::draw(const Texture2D& texture, const glm::vec3 position,
     glm::mat4 model;
     model = glm::translate(model, position);
 
-    model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.5f * size.z));
-    model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.5f * size.z));
+    //model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.5f * size.z));
+    //model = glm::rotate(model, rotate, glm::vec3(0.0f, 0.0f, 1.0f));
+    //model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.5f * size.z));
 
-    model = glm::scale(model, size);
+    //model = glm::scale(model, size);
 
     shader.setMatrix4fv("model", model);
 
@@ -38,12 +38,12 @@ void Renderer::initRenderData() {
     GLuint VBO;
     GLfloat vertices[] = {
         // Pos                // Tex
-        -1.0f, -1.0f, -1.0f,  0.0f, 0.0f,
-         1.0f, -1.0f, -1.0f,  1.0f, 0.0f,
-         1.0f,  1.0f, -1.0f,  1.0f, 1.0f,
-         1.0f,  1.0f, -1.0f,  1.0f, 1.0f,
-        -1.0f,  1.0f, -1.0f,  0.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f,  0.0f, 0.0f
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
     };
 
     glGenVertexArrays(1, &VAO);
