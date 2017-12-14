@@ -48,9 +48,8 @@ int main(int argc, char *argv[]) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
 
-    game->init(mode);
+    //game->init(mode);
 
-    /*
     // build and compile our shader zprogram
     // ------------------------------------
     Shader ourShader("shaders/3d_vertex.glsl", "shaders/3d_fragment.glsl");
@@ -68,7 +67,10 @@ int main(int argc, char *argv[]) {
     };
     // world space positions of our cubes
     glm::vec3 cubePositions[] = {
-        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 1.0f,  0.0f,  0.0f),
+        glm::vec3( -1.1f,  0.5f,  0.0f),
+        glm::vec3( -1.0f,  -0.2f,  -9.0f),
+        glm::vec3( 0.8f,  0.8f,  3.3f),
     };
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -115,17 +117,15 @@ int main(int argc, char *argv[]) {
 
         // render boxes
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 1; i++)
-        {
+        for (unsigned int i = 0; i < 4; i++) {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model;
             model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * 1;
-            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            //float angle = 20.0f * 1;
+            //model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 6);
-            glBindVertexArray(0);
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -138,9 +138,8 @@ int main(int argc, char *argv[]) {
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    */
 
-    game->loop(window);
+    //game->loop(window);
     delete game;
 
     glfwTerminate();
