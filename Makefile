@@ -2,7 +2,7 @@ SQUARES_EXE = Squares
 SP_INV_EXE  = SpaceInvaders
 CUBE_EXE    = Cube
 
-CXXFLAGS    = -std=c++11 -g -O3 -DGLEW_STATIC
+CXXFLAGS    = -std=c++11 -g -O2 -DGLEW_STATIC
 
 OS := $(shell uname)
 $(info $$OS is [$(OS)])
@@ -11,17 +11,17 @@ INCLUDEDIRS = -I/usr/local/include \
 	-I/usr/local/include/freetype2 \
 	-Isrc/Engine
 LDDIRS      = -L/usr/local/lib
-LIBS        = -lglfw.3 -lGLEW -lSOIL -lfreetype -framework OpenGL
-else ifeq ($(OS),CYGWIN_NT-6.1-WOW)
-INCLUDEDIRS = -Ic:\usr\local\include \
-	-Isrc/Engine
-LDDIRS      = -Lc:\usr\local\lib
-LIBS        = -lglfw3 -lgdi32 -lGLEW -lGL -lSOIL -lopengl32 -lfreetype
+LIBS        = -lglfw.3 -lGLEW -lfreetype -framework OpenGL
 else ifeq ($(OS),Linux)
 INCLUDEDIRS = -I/usr/include/freetype2 \
 	-Isrc/Engine
 LDDIRS      = -L/usr/local/lib
-LIBS        = -lglfw -lGLEW -lGL -lSOIL -lfreetype
+LIBS        = -lglfw -lGLEW -lGL -lfreetype
+else
+INCLUDEDIRS = -Ic:\usr\local\include \
+	-Isrc/Engine
+LDDIRS      = -Lc:\usr\local\lib
+LIBS        = -lglfw3 -lgdi32 -lGLEW -lGL -lopengl32 -lfreetype
 endif
 
 SQUARES_SRCDIR = src/SquaresGame
@@ -42,8 +42,16 @@ CUBE_OBJS      = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRC
 ENGINE_SRCS    = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
 ENGINE_OBJS    = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
 
-all: $(SQUARES_EXE) $(SP_INV_EXE) $(CUBE_EXE)
-	$(CXX) $(LDDIRS) $(OBJS) $(LIBS) -o $@
+all: $(CUBE_EXE)
+
+$(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
+	$(CXX) $(LDDIRS) $(CUBE_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
+
+$(SP_INV_EXE): $(SP_INV_OBJS) $(ENGINE_OBJS)
+	$(CXX) $(LDDIRS) $(SP_INV_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
+
+$(SQUARES_EXE): $(SQUARES_OBJS) $(ENGINE_OBJS)
+	$(CXX) $(LDDIRS) $(SQUARES_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
 
 $(SQUARES_OBJDIR)/%.o: $(SQUARES_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
@@ -56,15 +64,6 @@ $(CUBE_OBJDIR)/%.o: $(CUBE_SRCDIR)/%.cpp Makefile
 
 $(ENGINE_OBJDIR)/%.o: $(ENGINE_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
-
-$(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
-	$(CXX) $(LDDIRS) $(CUBE_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
-
-$(SP_INV_EXE): $(SP_INV_OBJS) $(ENGINE_OBJS)
-	$(CXX) $(LDDIRS) $(SP_INV_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
-
-$(SQUARES_EXE): $(SQUARES_OBJS) $(ENGINE_OBJS)
-	$(CXX) $(LDDIRS) $(SQUARES_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
 
 $(SQUARES_OBJDIR)/SquaresGame.o: \
 	$(ENGINE_SRCDIR)/GameBase.h \

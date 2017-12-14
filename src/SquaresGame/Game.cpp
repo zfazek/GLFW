@@ -19,9 +19,9 @@ Game::~Game() {
     delete textRenderer;
 }
 
-void Game::init(const GLFWvidmode* mode) {
-    width = mode->width;
-    height = mode->height;
+void Game::init(const GLint width, const GLint height) {
+    this->width = width;
+    this->height = height;
     Rect::init(width, height);
     textRenderer = new TextRenderer(width, height);
     create();

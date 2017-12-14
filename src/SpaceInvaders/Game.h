@@ -19,7 +19,7 @@ public:
 
     Game();
     ~Game();
-    void init(const GLFWvidmode* mode);
+    void init(const GLint width, const GLint height);
     void create();
     void processInput(const GLfloat dt);
     void update(const GLfloat dt);

@@ -17,19 +17,19 @@ Game::~Game() {
     delete textRenderer;
 }
 
-void Game::init(const GLFWvidmode* mode) {
-    width = mode->width;
-    height = mode->height;
+void Game::init(const GLint width, const GLint height) {
+    this->width = width;
+    this->height = height;
     Cube::init(width, height);
-    cube = new Cube(width, height);
-    textRenderer = new TextRenderer(width, height);
     create();
     changeBackground();
+    textRenderer = new TextRenderer(width, height);
     textRenderer->load("resources/ocraext.ttf", 48);
 }
 
 void Game::create() {
     state = GameState::GAME_ACTIVE;
+    cube = new Cube(width, height);
 }
 
 void Game::update(const GLfloat dt) {
@@ -49,12 +49,10 @@ void Game::changeBackground() {
 
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
-        /*
+        cube->draw();
         char text[128];
         snprintf(text, 128, "Text is working");
-        textRenderer->renderText(text, 10, 10, 1);
-        */
-        cube->draw();
+        textRenderer->renderText(text, 10, 10, 0.5f);
     } else if (state == GameState::GAME_WIN) {
     }
 }

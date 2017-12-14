@@ -21,7 +21,7 @@ public:
 
     GameBase();
     virtual ~GameBase();
-    virtual void init(const GLFWvidmode* mode) = 0;
+    virtual void init(const GLint width, const GLint height) = 0;
     virtual void loop(GLFWwindow* window);
     virtual void processInput(const GLfloat dt) = 0;
     virtual void update(const GLfloat dt) = 0;

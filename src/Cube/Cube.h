@@ -15,7 +15,7 @@ class Cube {
 
     private:
         GLfloat x, y, z, dx, dy, dz;
-        GLuint side;
+        GLfloat side;
         glm::vec3 color;
         GLuint width, height;
         Renderer* renderer;

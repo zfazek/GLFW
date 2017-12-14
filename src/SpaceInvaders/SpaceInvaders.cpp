@@ -25,8 +25,7 @@ int main(int argc, char *argv[]) {
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-    //GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Space Invaders", monitor, nullptr);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Space Invaders", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Space Invaders", monitor, nullptr);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -42,7 +41,7 @@ int main(int argc, char *argv[]) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    game->init(mode);
+    game->init(width, height);
     game->loop(window);
     delete game;
 
