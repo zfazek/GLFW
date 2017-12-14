@@ -4,18 +4,24 @@ CUBE_EXE    = Cube
 
 CXXFLAGS    = -std=c++11 -g -O3 -DGLEW_STATIC
 
-LDDIRS      = -L/usr/local/lib
-
 OS := $(shell uname)
+$(info $$OS is [$(OS)])
 ifeq ($(OS),Darwin)
 INCLUDEDIRS = -I/usr/local/include \
- -I/usr/local/include/freetype2 \
- -Isrc/Engine
-LIBS = -lglfw.3 -lGLEW -lSOIL -lfreetype -framework OpenGL
-else
+	-I/usr/local/include/freetype2 \
+	-Isrc/Engine
+LDDIRS      = -L/usr/local/lib
+LIBS        = -lglfw.3 -lGLEW -lSOIL -lfreetype -framework OpenGL
+else ifeq ($(OS),CYGWIN_NT-6.1-WOW)
+INCLUDEDIRS = -Ic:\usr\local\include \
+	-Isrc/Engine
+LDDIRS      = -Lc:\usr\local\lib
+LIBS        = -lglfw3 -lgdi32 -lGLEW -lGL -lSOIL -lopengl32 -lfreetype
+else ifeq ($(OS),Linux)
 INCLUDEDIRS = -I/usr/include/freetype2 \
- -Isrc/Engine
-LIBS = -lglfw -lGLEW -lGL -lSOIL -lfreetype
+	-Isrc/Engine
+LDDIRS      = -L/usr/local/lib
+LIBS        = -lglfw -lGLEW -lGL -lSOIL -lfreetype
 endif
 
 SQUARES_SRCDIR = src/SquaresGame
@@ -36,6 +42,9 @@ CUBE_OBJS      = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRC
 ENGINE_SRCS    = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
 ENGINE_OBJS    = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
 
+all: $(SQUARES_EXE) $(SP_INV_EXE) $(CUBE_EXE)
+	$(CXX) $(LDDIRS) $(OBJS) $(LIBS) -o $@
+
 $(SQUARES_OBJDIR)/%.o: $(SQUARES_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
@@ -45,7 +54,7 @@ $(SP_INV_OBJDIR)/%.o: $(SP_INV_SRCDIR)/%.cpp Makefile
 $(CUBE_OBJDIR)/%.o: $(CUBE_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
-$(ENGINE_OBJDIR)/%.o: $(ENGINE_SRCDIR)/%.cpp $(ENGINE_SRCDIR)/%.h Makefile
+$(ENGINE_OBJDIR)/%.o: $(ENGINE_SRCDIR)/%.cpp Makefile
 	$(CXX) $(CXXFLAGS) $(INCLUDEDIRS) -c -o $@ $<
 
 $(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
@@ -136,4 +145,4 @@ $(ENGINE_OBJDIR)/TextRenderer.o: \
 clean:
 	rm -rf $(SQUARES_OBJS) $(SP_INV_OBJS) $(CUBE_OBJS) $(ENGINE_OBJS) $(SQUARES_EXE) $(SP_INV_EXE) $(CUBE_EXE)
 
-.PHONY: clean
+.PHONY: clean all
