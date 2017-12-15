@@ -22,7 +22,7 @@ else
 INCLUDEDIRS := $(INCLUDEDIRS) \
 	-Ic:\usr\local\include
 LDDIRS      = -Lc:\usr\local\lib
-LIBS        = -lglfw3 -lgdi32 -lGLEW -lGL -lopengl32 -lfreetype
+LIBS        = -lglfw3 -lgdi32 -lglew32s -lGL -lopengl32 -lfreetype
 endif
 
 SQUARES_SRCDIR = src/SquaresGame
@@ -43,7 +43,7 @@ CUBE_OBJS      = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRC
 ENGINE_SRCS    = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
 ENGINE_OBJS    = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
 
-all: $(CUBE_EXE)
+all: $(CUBE_EXE) $(SQUARES_EXE) $(SP_INV_EXE)
 
 $(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
 	$(CXX) $(LDDIRS) $(CUBE_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
