@@ -3,23 +3,24 @@ SP_INV_EXE  = SpaceInvaders
 CUBE_EXE    = Cube
 
 CXXFLAGS    = -std=c++11 -g -O2 -DGLEW_STATIC
+INCLUDEDIRS = -Isrc/Engine
 
 OS := $(shell uname)
 $(info $$OS is [$(OS)])
 ifeq ($(OS),Darwin)
-INCLUDEDIRS = -I/usr/local/include \
-	-I/usr/local/include/freetype2 \
-	-Isrc/Engine
+INCLUDEDIRS := $(INCLUDEDIRS) \
+	-I/usr/local/include \
+	-I/usr/local/include/freetype2
 LDDIRS      = -L/usr/local/lib
 LIBS        = -lglfw.3 -lGLEW -lfreetype -framework OpenGL
 else ifeq ($(OS),Linux)
-INCLUDEDIRS = -I/usr/include/freetype2 \
-	-Isrc/Engine
+INCLUDEDIRS := $(INCLUDEDIRS) \
+	-I/usr/include/freetype2
 LDDIRS      = -L/usr/local/lib
 LIBS        = -lglfw -lGLEW -lGL -lfreetype
 else
-INCLUDEDIRS = -Ic:\usr\local\include \
-	-Isrc/Engine
+INCLUDEDIRS := $(INCLUDEDIRS) \
+	-Ic:\usr\local\include
 LDDIRS      = -Lc:\usr\local\lib
 LIBS        = -lglfw3 -lgdi32 -lGLEW -lGL -lopengl32 -lfreetype
 endif
