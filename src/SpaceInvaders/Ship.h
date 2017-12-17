@@ -9,7 +9,7 @@ class Ship {
     public:
         Ship(const GLuint width, const GLuint height);
         ~Ship();
-        void update(const GLfloat dt);
+        void update(const GLfloat deltaTime);
         void draw() const;
         static void init(const GLuint width, const GLuint height);
 

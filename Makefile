@@ -43,7 +43,7 @@ CUBE_OBJS      = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRC
 ENGINE_SRCS    = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
 ENGINE_OBJS    = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
 
-all: $(CUBE_EXE) $(SQUARES_EXE) $(SP_INV_EXE)
+all: $(CUBE_EXE)
 
 $(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
 	$(CXX) $(LDDIRS) $(CUBE_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@
@@ -71,12 +71,14 @@ $(SQUARES_OBJDIR)/SquaresGame.o: \
 	$(SQUARES_SRCDIR)/Game.h
 
 $(SQUARES_OBJDIR)/Game.o: \
+	$(SQUARES_SRCDIR)/Game.h \
 	$(ENGINE_SRCDIR)/GameBase.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
 	$(ENGINE_SRCDIR)/TextRenderer.h \
 	$(SQUARES_SRCDIR)/Rect.h
 
 $(SQUARES_OBJDIR)/Rect.o: \
+	$(SQUARES_SRCDIR)/Rect.h \
 	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
@@ -87,6 +89,7 @@ $(SP_INV_OBJDIR)/SpaceInvaders.o: \
 	$(SP_INV_SRCDIR)/Game.h
 
 $(SP_INV_OBJDIR)/Game.o: \
+	$(SP_INV_SRCDIR)/Game.h \
 	$(ENGINE_SRCDIR)/GameBase.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
 	$(ENGINE_SRCDIR)/TextRenderer.h \
@@ -95,16 +98,19 @@ $(SP_INV_OBJDIR)/Game.o: \
 	$(SP_INV_SRCDIR)/Droid.h
 
 $(SP_INV_OBJDIR)/Ship.o: \
+	$(SP_INV_SRCDIR)/Ship.h \
 	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
 $(SP_INV_OBJDIR)/Bullet.o: \
+	$(SP_INV_SRCDIR)/Bullet.h \
 	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
 $(SP_INV_OBJDIR)/Droid.o: \
+	$(SP_INV_SRCDIR)/Droid.h \
 	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
@@ -115,30 +121,40 @@ $(CUBE_OBJDIR)/CubeGame.o: \
 	$(CUBE_SRCDIR)/Game.h
 
 $(CUBE_OBJDIR)/Game.o: \
+	$(CUBE_SRCDIR)/Game.h \
 	$(ENGINE_SRCDIR)/GameBase.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
 	$(ENGINE_SRCDIR)/TextRenderer.h
 
 $(CUBE_OBJDIR)/Cube.o: \
+	$(CUBE_SRCDIR)/Cube.h \
 	$(ENGINE_SRCDIR)/Renderer.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
 
 $(ENGINE_OBJDIR)/GameBase.o: \
-	$(ENGINE_SRCDIR)/ResourceManager.h
+	$(ENGINE_SRCDIR)/GameBase.h \
+	$(ENGINE_SRCDIR)/ResourceManager.h \
+	$(ENGINE_SRCDIR)/Camera.h
 
 $(ENGINE_OBJDIR)/SpriteRenderer.o: \
+	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/Shader.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
 $(ENGINE_OBJDIR)/Renderer.o: \
+	$(ENGINE_SRCDIR)/Renderer.h \
 	$(ENGINE_SRCDIR)/Shader.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
+$(ENGINE_OBJDIR)/Camera.o: \
+	$(ENGINE_SRCDIR)/Camera.h
+
 $(ENGINE_OBJDIR)/TextRenderer.o: \
+	$(ENGINE_SRCDIR)/TextRenderer.h \
 	$(ENGINE_SRCDIR)/Shader.h \
 	$(ENGINE_SRCDIR)/Texture.h
 

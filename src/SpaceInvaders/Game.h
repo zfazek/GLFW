@@ -21,8 +21,8 @@ public:
     ~Game();
     void init(const GLint width, const GLint height);
     void create();
-    void processInput(const GLfloat dt);
-    void update(const GLfloat dt);
+    void processInput(const GLfloat deltaTime);
+    void update(const GLfloat deltaTime);
     void changeBackground();
     void render() const;
     void checkMouseClick(const double mouseX, const double mouseY);

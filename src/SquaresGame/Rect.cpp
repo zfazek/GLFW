@@ -36,9 +36,9 @@ void Rect::init(const GLuint width, const GLuint height) {
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
 }
 
-void Rect::update(const GLfloat dt) {
-    x += dx * dt;
-    y += dy * dt;
+void Rect::update(const GLfloat deltaTime) {
+    x += dx * deltaTime;
+    y += dy * deltaTime;
     if (x <= 0) {
         dx = std::abs(dx);
     } else if (x >= width - side) {

@@ -9,7 +9,7 @@ class Bullet {
     public:
         Bullet(const GLuint width, const GLuint height, const GLuint x, GLuint y);
         ~Bullet();
-        void update(const GLfloat dt);
+        void update(const GLfloat deltaTime);
         void draw() const;
         static void init(const GLuint width, const GLuint height);
 

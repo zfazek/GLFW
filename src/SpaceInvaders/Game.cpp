@@ -57,16 +57,16 @@ void Game::create() {
     state = GameState::GAME_ACTIVE;
 }
 
-void Game::update(const GLfloat dt) {
+void Game::update(const GLfloat deltaTime) {
     if (state == GameState::GAME_ACTIVE) {
-        ship->update(dt);
+        ship->update(deltaTime);
         for (const auto& droid : droids) {
-            droid->update(dt);
+            droid->update(deltaTime);
         }
         std::set<Bullet*>::iterator itBullet;
         std::set<Droid*>::iterator itDroid;
         for (itBullet = bullets.begin(); itBullet != bullets.end();) {
-            (*itBullet)->update(dt);
+            (*itBullet)->update(deltaTime);
             if ((*itBullet)->y < -100) {
                 bullets.erase(itBullet++);
             } else {
@@ -96,13 +96,13 @@ void Game::update(const GLfloat dt) {
     }
 }
 
-void Game::processInput(const GLfloat dt) {
+void Game::processInput(const GLfloat deltaTime) {
     if (state == GameState::GAME_ACTIVE) {
         if (keys[GLFW_KEY_LEFT]) {
-            ship->x -= ship->speed * dt;
+            ship->x -= ship->speed * deltaTime;
         }
         if (keys[GLFW_KEY_RIGHT]) {
-            ship->x += ship->speed * dt;
+            ship->x += ship->speed * deltaTime;
         }
         if (keys[GLFW_KEY_SPACE]) {
             GLfloat currentFrame = glfwGetTime();

@@ -3,6 +3,14 @@
 /SpaceInvaders
 tags
 
+.DS_Store
+Cube.dSYM
+
+# Eclipse
+.cproject
+.project
+.settings
+
 # Compiled Object files
 *.slo
 *.lo

@@ -38,15 +38,15 @@ void Game::create() {
     state = GameState::GAME_ACTIVE;
 }
 
-void Game::update(const GLfloat dt) {
+void Game::update(const GLfloat deltaTime) {
     if (state == GameState::GAME_ACTIVE) {
         for (const auto& rect : rects) {
-            rect->update(dt);
+            rect->update(deltaTime);
         }
     }
 }
 
-void Game::processInput(const GLfloat dt) {
+void Game::processInput(const GLfloat deltaTime) {
 }
 
 void Game::changeBackground() {

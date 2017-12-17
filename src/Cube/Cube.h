@@ -2,15 +2,19 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Renderer;
 
 class Cube {
     public:
         Cube(const GLuint width, const GLuint height);
+        Cube(const GLuint width, const GLuint height,
+                const GLuint x, const GLuint y, const GLuint z,
+                glm::vec3 color);
         ~Cube();
-        void update(const GLfloat dt);
-        void draw() const;
+        void update(const GLfloat deltaTime);
+        void draw(const glm::mat4 projection, const glm::mat4 view) const;
         static void init(const GLuint width, const GLuint height);
 
     private:

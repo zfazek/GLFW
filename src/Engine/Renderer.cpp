@@ -11,7 +11,8 @@ Renderer::~Renderer() {
 }
 
 void Renderer::draw(const Texture2D& texture, const glm::vec3 position,
-        const glm::vec3 size, const glm::vec3 rotate, const glm::vec3 color) {
+        const glm::vec3 size, const glm::vec3 rotate, const glm::vec3 color,
+        const glm::mat4 projection, const glm::mat4 view) {
     shader.use();
     glm::mat4 model;
     model = glm::translate(model, position);
@@ -20,6 +21,8 @@ void Renderer::draw(const Texture2D& texture, const glm::vec3 position,
     model = glm::rotate(model, glm::radians(rotate.z), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::scale(model, size);
 
+    shader.setMatrix4fv("projection", projection);
+    shader.setMatrix4fv("view", view);
     shader.setMatrix4fv("model", model);
     shader.setVector3f("spriteColor", color);
 
@@ -35,12 +38,12 @@ void Renderer::initRenderData() {
     GLuint VBO;
     GLfloat vertices[] = {
         // Pos                // Tex
-        -0.5f, -0.5f,  0.0f,  0.0f, 0.0f,
-         0.5f, -0.5f,  0.0f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.0f,  1.0f, 1.0f,
-         0.5f,  0.5f,  0.0f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.0f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  -0.5f,  0.0f, 0.0f,
 
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
          0.5f, -0.5f,  0.5f,  1.0f, 0.0f,

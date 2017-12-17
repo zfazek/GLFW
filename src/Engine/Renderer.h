@@ -12,7 +12,8 @@ class Renderer {
 public:
     Renderer(const Shader& shader);
     ~Renderer();
-    void draw(const Texture2D& texture, const glm::vec3 position, const glm::vec3 size = glm::vec3(100, 100, 100), const glm::vec3 rotate = glm::vec3(0.0f, 0.0f, 0.0f), const glm::vec3 color = glm::vec3(1.0f));
+    void draw(const Texture2D& texture, const glm::vec3 position, const glm::vec3 size, const glm::vec3 rotate, const glm::vec3 color,
+            const glm::mat4 projection, const glm::mat4 view);
 
 private:
     Shader shader;

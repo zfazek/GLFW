@@ -2,6 +2,9 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+
+#include "Camera.h"
 
 class TextRenderer;
 
@@ -18,17 +21,24 @@ public:
     GLuint width, height;
     GLfloat r, g, b;
     TextRenderer* textRenderer;
+    Camera* camera;
+    glm::mat4 projection;
+    glm::mat4 view;
+
 
     GameBase();
     virtual ~GameBase();
     virtual void init(const GLint width, const GLint height) = 0;
     virtual void loop(GLFWwindow* window);
-    virtual void processInput(const GLfloat dt) = 0;
-    virtual void update(const GLfloat dt) = 0;
+    virtual void processInput(const GLfloat deltaTime) = 0;
+    virtual void update(const GLfloat deltaTime) = 0;
     virtual void clearBackground() const;
     virtual void render() const = 0;
+    virtual void framebuffer_size_callback(GLFWwindow* window, int width, int height);
     virtual void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-    virtual void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) = 0;
+    virtual void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+    virtual void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
+    virtual void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 
 };

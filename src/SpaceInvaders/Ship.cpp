@@ -34,7 +34,7 @@ void Ship::init(const GLuint width, const GLuint height) {
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
 }
 
-void Ship::update(const GLfloat dt) {
+void Ship::update(const GLfloat deltaTime) {
     if (x < -1 * side) {
         x = -side + 10;
     } else if (x > width) {

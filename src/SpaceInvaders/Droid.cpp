@@ -31,7 +31,7 @@ void Droid::init(const GLuint width, const GLuint height) {
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
 }
 
-void Droid::update(const GLfloat dt) {
+void Droid::update(const GLfloat deltaTime) {
 }
 
 void Droid::draw() const {

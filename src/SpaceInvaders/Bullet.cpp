@@ -36,8 +36,8 @@ void Bullet::init(const GLuint width, const GLuint height) {
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
 }
 
-void Bullet::update(const GLfloat dt) {
-    y += dy * dt;
+void Bullet::update(const GLfloat deltaTime) {
+    y += dy * deltaTime;
 }
 
 void Bullet::draw() const {
