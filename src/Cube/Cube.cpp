@@ -1,6 +1,6 @@
 #include "Cube.h"
 
-#include "Renderer.h"
+#include "CubeRenderer.h"
 #include "ResourceManager.h"
 #include "Texture.h"
 
@@ -18,7 +18,7 @@ Cube::Cube(const GLuint width, const GLuint height) : width(width), height(heigh
     float g = static_cast<float>(std::rand()) / RAND_MAX;
     float b = static_cast<float>(std::rand()) / RAND_MAX;
     color = glm::vec3(r, g, b);
-    renderer = new Renderer(ResourceManager::getShader(name));
+    cubeRenderer = new CubeRenderer(ResourceManager::getShader(name));
 }
 
 Cube::Cube(const GLuint width, const GLuint height,
@@ -29,11 +29,11 @@ Cube::Cube(const GLuint width, const GLuint height,
                     y(y),
                     z(z),
                     color(color) {
-    renderer = new Renderer(ResourceManager::getShader(name));
+    cubeRenderer = new CubeRenderer(ResourceManager::getShader(name));
 }
 
 Cube::~Cube() {
-    delete renderer;
+    delete cubeRenderer;
 }
 
 void Cube::init(const GLuint width, const GLuint height) {
@@ -64,6 +64,6 @@ void Cube::draw(glm::mat4 projection, glm::mat4 view) const {
     const glm::vec3 size = glm::vec3(side, side, side);
     //glm::vec3 rotate(45.0f, -45.0f, 0.0f);
     glm::vec3 rotate;
-    renderer->draw(texture, position, size, rotate, color,
+    cubeRenderer->draw(texture, position, size, rotate, color,
             projection, view);
 }

@@ -128,7 +128,7 @@ $(CUBE_OBJDIR)/Game.o: \
 
 $(CUBE_OBJDIR)/Cube.o: \
 	$(CUBE_SRCDIR)/Cube.h \
-	$(ENGINE_SRCDIR)/Renderer.h \
+	$(ENGINE_SRCDIR)/CubeRenderer.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
@@ -144,8 +144,8 @@ $(ENGINE_OBJDIR)/SpriteRenderer.o: \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h
 
-$(ENGINE_OBJDIR)/Renderer.o: \
-	$(ENGINE_SRCDIR)/Renderer.h \
+$(ENGINE_OBJDIR)/CubeRenderer.o: \
+	$(ENGINE_SRCDIR)/CubeRenderer.h \
 	$(ENGINE_SRCDIR)/Shader.h \
 	$(ENGINE_SRCDIR)/Texture.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h

@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-class Renderer;
+class CubeRenderer;
 
 class Cube {
     public:
@@ -22,5 +22,5 @@ class Cube {
         GLfloat side;
         glm::vec3 color;
         GLuint width, height;
-        Renderer* renderer;
+        CubeRenderer* cubeRenderer;
 };

@@ -1,16 +1,16 @@
-#include "Renderer.h"
+#include "CubeRenderer.h"
 
 #include "Texture.h"
 
-Renderer::Renderer(const Shader& shader) : shader(shader), VAO{0} {
+CubeRenderer::CubeRenderer(const Shader& shader) : shader(shader), VAO{0} {
     initRenderData();
 }
 
-Renderer::~Renderer() {
+CubeRenderer::~CubeRenderer() {
     glDeleteVertexArrays(1, &VAO);
 }
 
-void Renderer::draw(const Texture2D& texture, const glm::vec3 position,
+void CubeRenderer::draw(const Texture2D& texture, const glm::vec3 position,
         const glm::vec3 size, const glm::vec3 rotate, const glm::vec3 color,
         const glm::mat4 projection, const glm::mat4 view) {
     shader.use();
@@ -34,7 +34,7 @@ void Renderer::draw(const Texture2D& texture, const glm::vec3 position,
     glBindVertexArray(0);
 }
 
-void Renderer::initRenderData() {
+void CubeRenderer::initRenderData() {
     GLuint VBO;
     GLfloat vertices[] = {
         // Pos                // Tex
