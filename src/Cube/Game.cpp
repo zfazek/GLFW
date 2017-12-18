@@ -1,5 +1,9 @@
 #include "Game.h"
 
+#include "Camera.h"
+#include "Cube.h"
+#include "TextRenderer.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -7,9 +11,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-
-#include "Cube.h"
-#include "TextRenderer.h"
 
 Game::Game() {
     srand(std::time(0));

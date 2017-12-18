@@ -1,14 +1,14 @@
 #include "ResourceManager.h"
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
+#include "Texture.h"
+#include "Shader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#include "Texture.h"
-#include "Shader.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Shader> ResourceManager::shaders;

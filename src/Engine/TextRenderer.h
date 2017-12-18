@@ -1,12 +1,11 @@
 #pragma once
 
-#include <map>
+#include "Shader.h"
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "Shader.h"
-#include "Texture.h"
+#include <map>
 
 struct Character {
     GLuint textureID;

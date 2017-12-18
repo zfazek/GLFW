@@ -1,14 +1,11 @@
 #include "Cube.h"
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include <cmath>
-#include <cstdlib>
-
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Texture.h"
+
+#include <cmath>
+#include <cstdlib>
 
 static char name[] = "cube";
 

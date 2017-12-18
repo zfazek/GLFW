@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameBase.h"
+
 #include <vector>
 
 class TextRenderer;

@@ -1,7 +1,5 @@
 #include "GameBase.h"
 
-#include <GL/glew.h>
-
 #include "ResourceManager.h"
 
 GameBase::GameBase() : keys{}{

@@ -4,8 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "Camera.h"
-
+class Camera;
 class TextRenderer;
 
 enum class GameState {
