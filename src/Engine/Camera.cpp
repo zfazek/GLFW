@@ -16,26 +16,26 @@ glm::mat4 Camera::getViewMatrix() const {
     return glm::lookAt(position, position + front, up);
 }
 
-void Camera::processKeyboard(Camera_Movement direction, float deltaTime) {
+void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
     float velocity = movementSpeed * deltaTime;
-    if (direction == FORWARD) {
+    if (direction == CameraMovement::FORWARD) {
         position.x += front.x * velocity;
         position.z += front.z * velocity;
     }
-    if (direction == BACKWARD) {
+    if (direction == CameraMovement::BACKWARD) {
         position.x -= front.x * velocity;
         position.z -= front.z * velocity;
     }
-    if (direction == LEFT) {
+    if (direction == CameraMovement::LEFT) {
         position -= right * velocity;
     }
-    if (direction == RIGHT) {
+    if (direction == CameraMovement::RIGHT) {
         position += right * velocity;
     }
-    if (direction == UP) {
+    if (direction == CameraMovement::UP) {
         position.y += velocity;
     }
-    if (direction == DOWN) {
+    if (direction == CameraMovement::DOWN) {
         position.y -= velocity;
     }
 }

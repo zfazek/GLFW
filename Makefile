@@ -124,7 +124,8 @@ $(CUBE_OBJDIR)/Game.o: \
 	$(CUBE_SRCDIR)/Game.h \
 	$(ENGINE_SRCDIR)/GameBase.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
-	$(ENGINE_SRCDIR)/TextRenderer.h
+	$(ENGINE_SRCDIR)/TextRenderer.h \
+	$(ENGINE_SRCDIR)/Camera.h
 
 $(CUBE_OBJDIR)/Cube.o: \
 	$(CUBE_SRCDIR)/Cube.h \

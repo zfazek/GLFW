@@ -70,22 +70,22 @@ void Game::update(const GLfloat deltaTime) {
 void Game::processInput(const GLfloat deltaTime) {
     if (state == GameState::GAME_ACTIVE) {
         if (keys[GLFW_KEY_W]) {
-            camera->processKeyboard(FORWARD, deltaTime);
+            camera->processKeyboard(CameraMovement::FORWARD, deltaTime);
         }
         if (keys[GLFW_KEY_S]) {
-            camera->processKeyboard(BACKWARD, deltaTime);
+            camera->processKeyboard(CameraMovement::BACKWARD, deltaTime);
         }
         if (keys[GLFW_KEY_A]) {
-            camera->processKeyboard(LEFT, deltaTime);
+            camera->processKeyboard(CameraMovement::LEFT, deltaTime);
         }
         if (keys[GLFW_KEY_D]) {
-            camera->processKeyboard(RIGHT, deltaTime);
+            camera->processKeyboard(CameraMovement::RIGHT, deltaTime);
         }
         if (keys[GLFW_KEY_SPACE]) {
-            camera->processKeyboard(UP, deltaTime);
+            camera->processKeyboard(CameraMovement::UP, deltaTime);
         }
         if (keys[GLFW_KEY_LEFT_SHIFT]) {
-            camera->processKeyboard(DOWN, deltaTime);
+            camera->processKeyboard(CameraMovement::DOWN, deltaTime);
         }
     }
 }
