@@ -22,11 +22,11 @@ void GameBase::loop(GLFWwindow* window) {
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        clearBackground();
+        render();
         glfwPollEvents();
         processInput(deltaTime);
-        clearBackground();
         update(deltaTime);
-        render();
         glfwSwapBuffers(window);
     }
 }
