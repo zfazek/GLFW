@@ -31,6 +31,7 @@ public:
     virtual void loop(GLFWwindow* window);
     virtual void processInput(const GLfloat deltaTime) = 0;
     virtual void update(const GLfloat deltaTime) = 0;
+    virtual void printFPS(const int fps) const;
     virtual void clearBackground() const;
     virtual void render() const = 0;
     virtual void framebuffer_size_callback(GLFWwindow* window, int width, int height);

@@ -61,10 +61,13 @@ void Game::update(const GLfloat deltaTime) {
                 static_cast<GLfloat>(width) / static_cast<GLfloat>(height),
                 0.1f, 100.0f);
         view = camera->getViewMatrix();
-        char text[128];
-        snprintf(text, 128, "FPS: %d", (int)(60/deltaTime));
-        textRenderer->renderText(text, 10, 45, 0.3f);
     }
+}
+
+void Game::printFPS(const int fps) const {
+    char text[128];
+    snprintf(text, 128, "FPS: %d", fps);
+    textRenderer->renderText(text, 10, 45, 0.3f);
 }
 
 void Game::processInput(const GLfloat deltaTime) {

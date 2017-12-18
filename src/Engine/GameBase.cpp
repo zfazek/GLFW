@@ -17,17 +17,29 @@ void GameBase::clearBackground() const {
 void GameBase::loop(GLFWwindow* window) {
     GLfloat deltaTime = 0.0f;
     GLfloat lastFrame = 0.0f;
+    GLfloat lastFrameFPS = 0.0f;
+    GLfloat deltaTimeFPS = 0.0f;
+    long numFrame = 0;
+    int fps = 0;
 
     while (!glfwWindowShouldClose(window)) {
         GLfloat currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
+        deltaTimeFPS = currentFrame - lastFrameFPS;
         lastFrame = currentFrame;
         clearBackground();
         render();
         glfwPollEvents();
         processInput(deltaTime);
         update(deltaTime);
+        if (currentFrame - lastFrameFPS >= 1.0) {
+            fps = numFrame/(currentFrame - lastFrameFPS);
+            lastFrameFPS = currentFrame;
+            numFrame = 0;
+        }
+        printFPS(fps);
         glfwSwapBuffers(window);
+        ++numFrame;
     }
 }
 
@@ -48,6 +60,8 @@ void GameBase::key_callback(GLFWwindow* window, int key, int scancode, int actio
 void GameBase::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 }
+
+void GameBase::printFPS(const int fps) const {}
 
 void GameBase::mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {}
 void GameBase::cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {}
