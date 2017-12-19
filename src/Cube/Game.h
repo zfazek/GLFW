@@ -9,7 +9,6 @@ class Cube;
 
 class Game : public GameBase {
 public:
-    int count;
     std::vector<Cube*> cubes;
     float lastX;
     float lastY;

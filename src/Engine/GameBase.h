@@ -19,11 +19,11 @@ public:
     GLboolean keys[1024];
     GLuint width, height;
     GLfloat r, g, b;
+    GLFWwindow* window;
     TextRenderer* textRenderer;
     Camera* camera;
     glm::mat4 projection;
     glm::mat4 view;
-
 
     GameBase();
     virtual ~GameBase();
@@ -31,6 +31,8 @@ public:
     virtual void loop(GLFWwindow* window);
     virtual void processInput(const GLfloat deltaTime) = 0;
     virtual void update(const GLfloat deltaTime) = 0;
+    virtual void updateTimers();
+    virtual void calculateFPS();
     virtual void printFPS(const int fps) const;
     virtual void clearBackground() const;
     virtual void render() const = 0;
@@ -40,5 +42,12 @@ public:
     virtual void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
     virtual void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-
+private:
+    GLfloat currentTime;
+    GLfloat deltaTime;
+    GLfloat lastFrameTime;
+    GLfloat lastFrameTimeFPS;
+    GLfloat deltaTimeFPS;
+    long numFrame;
+    int fps;
 };

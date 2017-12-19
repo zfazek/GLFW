@@ -2,7 +2,14 @@
 
 #include "ResourceManager.h"
 
-GameBase::GameBase() : keys{}{
+GameBase::GameBase() : keys{} {
+    currentTime = 0.0f;
+    deltaTime = 0.0f;
+    lastFrameTime = 0.0f;
+    lastFrameTimeFPS = 0.0f;
+    deltaTimeFPS = 0.0f;
+    numFrame = 0;
+    fps = 0;
 }
 
 GameBase::~GameBase() {
@@ -15,28 +22,15 @@ void GameBase::clearBackground() const {
 }
 
 void GameBase::loop(GLFWwindow* window) {
-    GLfloat deltaTime = 0.0f;
-    GLfloat lastFrame = 0.0f;
-    GLfloat lastFrameFPS = 0.0f;
-    GLfloat deltaTimeFPS = 0.0f;
-    long numFrame = 0;
-    int fps = 0;
 
     while (!glfwWindowShouldClose(window)) {
-        GLfloat currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        deltaTimeFPS = currentFrame - lastFrameFPS;
-        lastFrame = currentFrame;
         clearBackground();
         render();
         glfwPollEvents();
+        updateTimers();
         processInput(deltaTime);
         update(deltaTime);
-        if (currentFrame - lastFrameFPS >= 1.0) {
-            fps = numFrame/(currentFrame - lastFrameFPS);
-            lastFrameFPS = currentFrame;
-            numFrame = 0;
-        }
+        calculateFPS();
         printFPS(fps);
         glfwSwapBuffers(window);
         ++numFrame;
@@ -59,6 +53,21 @@ void GameBase::key_callback(GLFWwindow* window, int key, int scancode, int actio
 
 void GameBase::framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
+}
+
+void GameBase::updateTimers() {
+    currentTime = glfwGetTime();
+    deltaTime = currentTime - lastFrameTime;
+    deltaTimeFPS = currentTime - lastFrameTimeFPS;
+    lastFrameTime = currentTime;
+}
+
+void GameBase::calculateFPS() {
+    if (currentTime - lastFrameTimeFPS >= 1.0) {
+        fps = numFrame/(currentTime - lastFrameTimeFPS);
+        lastFrameTimeFPS = currentTime;
+        numFrame = 0;
+    }
 }
 
 void GameBase::printFPS(const int fps) const {}

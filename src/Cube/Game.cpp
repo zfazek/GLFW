@@ -13,7 +13,6 @@
 #include <iostream>
 
 Game::Game() {
-    srand(std::time(0));
 }
 
 Game::~Game() {
