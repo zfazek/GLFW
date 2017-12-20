@@ -23,8 +23,9 @@ Game::~Game() {
     delete camera;
 }
 
-void Game::init(GLFWwindow* window, const GLint width, const GLint height) {
+void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height) {
     this->window = window;
+    this->windowTitle = windowTitle;
     this->width = width;
     this->height = height;
     lastX = width / 2.0f;
@@ -90,6 +91,9 @@ void Game::processInput(const GLfloat deltaTime) {
         if (keys[GLFW_KEY_LEFT_SHIFT]) {
             camera->processKeyboard(CameraMovement::DOWN, deltaTime);
         }
+        if (keys[GLFW_KEY_F]) {
+            toggleFullScreen();
+        }
     }
 }
 
@@ -122,8 +126,15 @@ void Game::render() const {
 void Game::checkMouseClick(const double mouseX, const double mouseY) {
 }
 
-void Game::mouse_button_callback(GLFWwindow* window, int button, int action,
-        int mods) {
+void Game::mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+    if (action == GLFW_PRESS) {
+        int cursorMode = glfwGetInputMode(window, GLFW_CURSOR);
+        if (cursorMode == GLFW_CURSOR_DISABLED) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        } else if (cursorMode == GLFW_CURSOR_NORMAL) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+    }
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
         double xpos, ypos;
         glfwGetCursorPos(window, &xpos, &ypos);
@@ -132,19 +143,21 @@ void Game::mouse_button_callback(GLFWwindow* window, int button, int action,
 }
 
 void Game::cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
-    if (firstMouse) {
+    if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED) {
+        if (firstMouse) {
+            lastX = xpos;
+            lastY = ypos;
+            firstMouse = false;
+        }
+
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
         lastX = xpos;
         lastY = ypos;
-        firstMouse = false;
+
+        camera->processMouseMovement(xoffset, yoffset);
     }
-
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-    lastX = xpos;
-    lastY = ypos;
-
-    camera->processMouseMovement(xoffset, yoffset);
 }
 
 void Game::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {

@@ -70,6 +70,14 @@ void GameBase::calculateFPS() {
     }
 }
 
+void GameBase::toggleFullScreen() {
+    if (fullScreen) {
+
+    } else {
+    }
+    fullScreen = !fullScreen;
+}
+
 void GameBase::printFPS(const int fps) const {}
 
 void GameBase::mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {}

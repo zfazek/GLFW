@@ -36,9 +36,9 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-    GLFWwindow* window = glfwCreateWindow(width, height, "Cube", nullptr, nullptr);
+    const std::string windowTitle = "Cube";
+    GLFWwindow* window = glfwCreateWindow(width, height, windowTitle.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -52,12 +52,12 @@ int main(int argc, char *argv[]) {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glViewport(0, 0, width, height);
-    //glEnable(GL_CULL_FACE);
+//    glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
 
-    game->init(window, width, height);
+    game->init(window, windowTitle, width, height);
     game->loop();
 
     delete game;

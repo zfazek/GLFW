@@ -23,9 +23,10 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
+    std::string windowTitle = "Squares Game";
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-    GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "Squares Game", monitor, nullptr);
+    GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, windowTitle.c_str(), monitor, nullptr);
     glfwMakeContextCurrent(window);
 
     glewExperimental = GL_TRUE;
@@ -41,7 +42,7 @@ int main(int argc, char *argv[]) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    game->init(window, width, height);
+    game->init(window, windowTitle, width, height);
     game->loop();
     delete game;
 

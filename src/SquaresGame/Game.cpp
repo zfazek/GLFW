@@ -19,8 +19,9 @@ Game::~Game() {
     delete textRenderer;
 }
 
-void Game::init(GLFWwindow* window, const GLint width, const GLint height) {
+void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height) {
     this->window = window;
+    this->windowTitle = windowTitle;
     this->width = width;
     this->height = height;
     Rect::init(width, height);
