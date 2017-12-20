@@ -25,7 +25,8 @@ Game::~Game() {
     delete textRenderer;
 }
 
-void Game::init(const GLint width, const GLint height) {
+void Game::init(GLFWwindow* window, const GLint width, const GLint height) {
+    this->window = window;
     this->width = width;
     this->height = height;
     Ship::init(width, height);

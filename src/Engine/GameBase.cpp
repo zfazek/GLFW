@@ -21,7 +21,7 @@ void GameBase::clearBackground() const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void GameBase::loop(GLFWwindow* window) {
+void GameBase::loop() {
 
     while (!glfwWindowShouldClose(window)) {
         clearBackground();

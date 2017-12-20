@@ -57,8 +57,8 @@ int main(int argc, char *argv[]) {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
 
-    game->init(width, height);
-    game->loop(window);
+    game->init(window, width, height);
+    game->loop();
 
     delete game;
     glfwTerminate();

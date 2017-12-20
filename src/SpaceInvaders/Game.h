@@ -19,7 +19,7 @@ public:
 
     Game();
     ~Game();
-    void init(const GLint width, const GLint height);
+    void init(GLFWwindow* window, const GLint width, const GLint height);
     void create();
     void processInput(const GLfloat deltaTime);
     void update(const GLfloat deltaTime);

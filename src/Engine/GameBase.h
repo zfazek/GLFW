@@ -27,8 +27,8 @@ public:
 
     GameBase();
     virtual ~GameBase();
-    virtual void init(const GLint width, const GLint height) = 0;
-    virtual void loop(GLFWwindow* window);
+    virtual void init(GLFWwindow* window, const GLint width, const GLint height) = 0;
+    virtual void loop();
     virtual void processInput(const GLfloat deltaTime) = 0;
     virtual void update(const GLfloat deltaTime) = 0;
     virtual void updateTimers();
