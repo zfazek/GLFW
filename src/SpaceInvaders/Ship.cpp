@@ -1,8 +1,5 @@
 #include "Ship.h"
 
-#include <cmath>
-#include <cstdlib>
-
 #include "ResourceManager.h"
 #include "SpriteRenderer.h"
 #include "Texture.h"

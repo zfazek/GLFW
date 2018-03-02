@@ -4,9 +4,6 @@
 #include "ResourceManager.h"
 #include "Texture.h"
 
-#include <cmath>
-#include <cstdlib>
-
 static char name[] = "cube";
 
 Cube::Cube(const GLuint width, const GLuint height) : width(width), height(height) {

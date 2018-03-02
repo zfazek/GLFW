@@ -1,9 +1,5 @@
 #include "Bullet.h"
 
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-
 #include "ResourceManager.h"
 #include "SpriteRenderer.h"
 #include "Texture.h"

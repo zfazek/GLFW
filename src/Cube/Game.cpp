@@ -4,14 +4,6 @@
 #include "Cube.h"
 #include "TextRenderer.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
-
 Game::Game() {
 }
 

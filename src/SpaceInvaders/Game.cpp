@@ -1,9 +1,6 @@
 #include "Game.h"
 
-#include <cstdio>
-#include <cstdlib>
 #include <ctime>
-#include <iostream>
 
 #include "Ship.h"
 #include "Bullet.h"

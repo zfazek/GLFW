@@ -1,7 +1,5 @@
 #include "Game.h"
 
-#include <cstdio>
-#include <cstdlib>
 #include <ctime>
 #include <iostream>
 

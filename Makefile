@@ -2,6 +2,7 @@ SQUARES_EXE = Squares
 SP_INV_EXE  = SpaceInvaders
 CUBE_EXE    = Cube
 
+CXX         = g++
 CXXFLAGS    = -std=c++11 -g -O2 -DGLEW_STATIC
 INCLUDEDIRS = -Isrc/Engine
 
@@ -43,7 +44,7 @@ CUBE_OBJS      = $(patsubst $(CUBE_SRCDIR)/%.cpp, $(CUBE_OBJDIR)/%.o, $(CUBE_SRC
 ENGINE_SRCS    = $(wildcard $(ENGINE_SRCDIR)/*.cpp)
 ENGINE_OBJS    = $(patsubst $(ENGINE_SRCDIR)/%.cpp, $(ENGINE_OBJDIR)/%.o, $(ENGINE_SRCS))
 
-all: $(CUBE_EXE)
+all: $(CUBE_EXE) $(SQUARES_EXE) $(SP_INV_EXE)
 
 $(CUBE_EXE): $(CUBE_OBJS) $(ENGINE_OBJS)
 	$(CXX) $(LDDIRS) $(CUBE_OBJS) $(ENGINE_OBJS) $(LIBS) -o $@

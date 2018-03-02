@@ -1,9 +1,9 @@
 #pragma once
 
+#include <GL/glew.h>
+
 #include <map>
 #include <string>
-
-#include <GL/glew.h>
 
 class Shader;
 class Texture2D;
