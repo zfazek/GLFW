@@ -2,7 +2,7 @@
 
 #include "Texture.h"
 
-CubeRenderer::CubeRenderer(const Shader& shader) : shader(shader), VAO{0} {
+CubeRenderer::CubeRenderer(const Shader& shader_) : shader(shader_), VAO{0} {
     initRenderData();
 }
 
@@ -14,7 +14,7 @@ void CubeRenderer::draw(const Texture2D& texture, const glm::vec3 position,
         const glm::vec3 size, const glm::vec3 rotate, const glm::vec3 color,
         const glm::mat4 projection, const glm::mat4 view) {
     shader.use();
-    glm::mat4 model;
+    glm::mat4 model = glm::mat4(1.0);
     model = glm::translate(model, position);
     model = glm::rotate(model, glm::radians(rotate.x), glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::rotate(model, glm::radians(rotate.y), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -88,7 +88,7 @@ void CubeRenderer::initRenderData() {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glBindVertexArray(VAO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), static_cast<GLvoid*>(nullptr));
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);

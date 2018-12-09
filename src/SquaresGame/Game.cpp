@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "Rect.h"
+#include "ResourceManager.h"
+#include "SpriteRenderer.h"
 #include "TextRenderer.h"
 
 Game::Game() {
@@ -14,24 +16,26 @@ Game::~Game() {
     for (const auto& rect : rects) {
         delete rect;
     }
+    delete spriteRenderer;
     delete textRenderer;
 }
 
-void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height) {
+void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height) {
     this->window = window;
     this->windowTitle = windowTitle;
     this->width = width;
     this->height = height;
     Rect::init(width, height);
-    textRenderer = new TextRenderer(width, height);
     create();
     changeBackground();
+    spriteRenderer = new SpriteRenderer(ResourceManager::getShader(Rect::name));
+    textRenderer = new TextRenderer(width, height);
     textRenderer->load("resources/ocraext.ttf", 48);
 }
 
 void Game::create() {
     count = 0;
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 100; i++) {
         Rect* rect = new Rect(width, height);
         rects.insert(rect);
     }
@@ -58,10 +62,13 @@ void Game::changeBackground() {
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
         for (const auto& rect : rects) {
-            rect->draw();
+            rect->draw(spriteRenderer);
         }
+        static char text[128];
+        snprintf(text, 128, "%lu", rects.size());
+        textRenderer->renderText(text, 10, 10, 1);
     } else if (state == GameState::GAME_WIN) {
-        char text[128];
+        static char text[128];
         snprintf(text, 128, "You clicked %d times.", count);
         textRenderer->renderText(text, 10, 10, 1);
     }

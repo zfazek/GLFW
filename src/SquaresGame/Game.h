@@ -7,8 +7,8 @@
 
 #include "GameBase.h"
 
+class SpriteRenderer;
 class Rect;
-class TextRenderer;
 
 class Game : public GameBase {
 public:
@@ -17,7 +17,7 @@ public:
 
     Game();
     ~Game();
-    void init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height);
+    void init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height);
     void create();
     void processInput(const GLfloat deltaTime);
     void update(const GLfloat deltaTime);
@@ -26,4 +26,7 @@ public:
     void checkMissed(const double mouseX, const double mouseY);
     void checkMouseClick(const double mouseX, const double mouseY);
     void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+
+  private:
+    SpriteRenderer* spriteRenderer;
 };

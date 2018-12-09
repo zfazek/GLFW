@@ -7,9 +7,9 @@ Texture2D::Texture2D()
     glGenTextures(1, &this->ID);
 }
 
-void Texture2D::generate(GLuint width, GLuint height, unsigned char* data) {
-    this->width = width;
-    this->height = height;
+void Texture2D::generate(GLuint width_, GLuint height_, unsigned char* data) {
+    width = width_;
+    height = height_;
     glBindTexture(GL_TEXTURE_2D, this->ID);
     glTexImage2D(GL_TEXTURE_2D, 0, this->internal_Format, width, height, 0, this->image_Format, GL_UNSIGNED_BYTE, data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->wrap_S);

@@ -22,7 +22,7 @@ public:
 
     Game();
     ~Game();
-    void init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height);
+    void init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height);
     void create();
     void processInput(const GLfloat deltaTime);
     void update(const GLfloat deltaTime);

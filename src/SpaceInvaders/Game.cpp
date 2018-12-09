@@ -22,7 +22,7 @@ Game::~Game() {
     delete textRenderer;
 }
 
-void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height) {
+void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height) {
     this->window = window;
     this->windowTitle = windowTitle;
     this->width = width;
@@ -134,7 +134,7 @@ void Game::render() const {
             bullet->draw();
         }
     } else if (state == GameState::GAME_WIN) {
-        char text[128];
+        static char text[128];
         snprintf(text, 128, "You shot %d times.", count);
         textRenderer->renderText(text, 10, 10, 1);
     }

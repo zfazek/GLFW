@@ -6,7 +6,7 @@
 
 static char name[] = "droid";
 
-Droid::Droid(const GLuint idx, const GLuint width, const GLuint height, GLfloat x, GLfloat y) : idx(idx), width(width), height(height), x(x), y(y) {
+Droid::Droid(const GLuint idx_, const GLuint width_, const GLuint height_, GLfloat x_, GLfloat y_) : idx(idx_), x(x_), y(y_), width(width_), height(height_) {
     side = 100;
     float r = 1.0f;
     float g = 1.0f;

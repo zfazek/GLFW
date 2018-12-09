@@ -1,14 +1,14 @@
 #include "Rect.h"
 
-#include "ResourceManager.h"
 #include "SpriteRenderer.h"
+#include "ResourceManager.h"
 #include "Texture.h"
 
-static char name[] = "rect";
+std::string Rect::name = "rect";
 
-Rect::Rect(const GLuint width, const GLuint height) : width(width), height(height) {
+Rect::Rect(const GLuint width_, const GLuint height_) : width(width_), height(height_) {
     const int maxSpeed = 100;
-    side = std::rand() % 100 + 100;
+    side = std::rand() % height / 15 + height / 15;
     x = std::rand() % (width - side);
     y = std::rand() % (height - side);
     dx = 2 * (std::rand() % maxSpeed) - maxSpeed;
@@ -17,17 +17,15 @@ Rect::Rect(const GLuint width, const GLuint height) : width(width), height(heigh
     float g = static_cast<float>(std::rand()) / RAND_MAX;
     float b = static_cast<float>(std::rand()) / RAND_MAX;
     color = glm::vec3(r, g, b);
-    spriteRenderer = new SpriteRenderer(ResourceManager::getShader(name));
 }
 
 Rect::~Rect() {
-    delete spriteRenderer;
 }
 
 void Rect::init(const GLuint width, const GLuint height) {
     ResourceManager::loadTexture("resources/block.png", GL_TRUE, name);
     ResourceManager::loadShader("shaders/rect_vertex.glsl", "shaders/rect_fragment.glsl", nullptr, name);
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho<float>(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
     ResourceManager::getShader(name).use();
     ResourceManager::getShader(name).setInteger("image", 0);
     ResourceManager::getShader(name).setMatrix4fv("projection", projection);
@@ -48,7 +46,7 @@ void Rect::update(const GLfloat deltaTime) {
     }
 }
 
-void Rect::draw() const {
+void Rect::draw(SpriteRenderer* spriteRenderer) const {
     const Texture2D& texture = ResourceManager::getTexture(name);
     const glm::vec2 position = glm::vec2(x, y);
     const glm::vec2 size = glm::vec2(side, side);

@@ -3,7 +3,9 @@ SP_INV_EXE  = SpaceInvaders
 CUBE_EXE    = Cube
 
 CXX         = g++
-CXXFLAGS    = -std=c++11 -g -O2 -DGLEW_STATIC
+#CXX         = clang++
+CXXFLAGS    = -std=c++11 -g -O2 -DGLEW_STATIC -Wall -pedantic -Werror
+#CXXFLAGS    = -std=c++11 -g -O2 -DGLEW_STATIC -Weverything -Werror -Wno-c++98-compat -Wno-padded -Wno-double-promotion -Wno-conversion -Wno-missing-variable-declarations -Wno-global-constructors -Wno-missing-prototypes -Wno-old-style-cast
 INCLUDEDIRS = -Isrc/Engine
 
 OS := $(shell uname)
@@ -74,6 +76,7 @@ $(SQUARES_OBJDIR)/SquaresGame.o: \
 $(SQUARES_OBJDIR)/Game.o: \
 	$(SQUARES_SRCDIR)/Game.h \
 	$(ENGINE_SRCDIR)/GameBase.h \
+	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
 	$(ENGINE_SRCDIR)/TextRenderer.h \
 	$(SQUARES_SRCDIR)/Rect.h
@@ -92,6 +95,7 @@ $(SP_INV_OBJDIR)/SpaceInvaders.o: \
 $(SP_INV_OBJDIR)/Game.o: \
 	$(SP_INV_SRCDIR)/Game.h \
 	$(ENGINE_SRCDIR)/GameBase.h \
+	$(ENGINE_SRCDIR)/SpriteRenderer.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
 	$(ENGINE_SRCDIR)/TextRenderer.h \
 	$(SP_INV_SRCDIR)/Ship.h \
@@ -126,6 +130,7 @@ $(CUBE_OBJDIR)/Game.o: \
 	$(ENGINE_SRCDIR)/GameBase.h \
 	$(ENGINE_SRCDIR)/ResourceManager.h \
 	$(ENGINE_SRCDIR)/TextRenderer.h \
+	$(ENGINE_SRCDIR)/CubeRenderer.h \
 	$(ENGINE_SRCDIR)/Camera.h
 
 $(CUBE_OBJDIR)/Cube.o: \

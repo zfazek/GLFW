@@ -57,7 +57,7 @@ void Camera::processMouseMovement(float xoffset, float yoffset,
     updateCameraVectors();
 }
 
-void Camera::processMouseScroll(float yoffset) {
+void Camera::processMouseScroll(const float yoffset) {
     if (zoom >= 1.0f && zoom <= 45.0f)
         zoom -= yoffset;
     if (zoom <= 1.0f)

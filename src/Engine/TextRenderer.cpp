@@ -11,7 +11,7 @@ static char name[] = "text";
 
 TextRenderer::TextRenderer(const GLuint width, const GLuint height) {
     textShader = ResourceManager::loadShader("shaders/text_vertex.glsl", "shaders/text_fragment.glsl", nullptr, name);
-    textShader.setMatrix4fv("projection", glm::ortho(0.0f, static_cast<GLfloat>(width), static_cast<GLfloat>(height), 0.0f), GL_TRUE);
+    textShader.setMatrix4fv("projection", glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f), GL_TRUE);
     textShader.setInteger(name, 0);
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -77,8 +77,7 @@ void TextRenderer::renderText(const std::string& text, GLfloat x, const GLfloat 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
-    std::string::const_iterator c;
-    for (c = text.begin(); c != text.end(); c++) {
+    for (std::string::const_iterator c = text.begin(); c != text.end(); c++) {
         Character ch = characters[*c];
 
         GLfloat xpos = x + ch.bearing.x * scale;

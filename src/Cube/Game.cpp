@@ -2,6 +2,8 @@
 
 #include "Camera.h"
 #include "Cube.h"
+#include "CubeRenderer.h"
+#include "ResourceManager.h"
 #include "TextRenderer.h"
 
 Game::Game() {
@@ -11,11 +13,12 @@ Game::~Game() {
     for (const auto cube : cubes) {
         delete cube;
     }
+    delete cubeRenderer;
     delete textRenderer;
     delete camera;
 }
 
-void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLint width, const GLint height) {
+void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height) {
     this->window = window;
     this->windowTitle = windowTitle;
     this->width = width;
@@ -23,23 +26,24 @@ void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLint 
     lastX = width / 2.0f;
     lastY = height / 2.0f;
     firstMouse = true;
-    Cube::init(width, height);
+    Cube::init();
     create();
     changeBackground();
     textRenderer = new TextRenderer(width, height);
     textRenderer->load("resources/ocraext.ttf", 48);
+    cubeRenderer = new CubeRenderer(ResourceManager::getShader(Cube::name));
 }
 
 void Game::create() {
     state = GameState::GAME_ACTIVE;
-    for (int x = 0; x < 50; x++) {
-        for (int z = 0; z < 50; z++) {
+    for (GLuint x = 0; x < 50; x++) {
+        for (GLuint z = 0; z < 50; z++) {
             const GLuint y = 0;
             float r = static_cast<float>(std::rand()) / RAND_MAX;
             float g = static_cast<float>(std::rand()) / RAND_MAX;
             float b = static_cast<float>(std::rand()) / RAND_MAX;
             glm::vec3 color = glm::vec3(r, g, b);
-            Cube* cube = new Cube(width, height, x, y, z, color);
+            Cube* cube = new Cube(x, y, z, color);
             cubes.push_back(cube);
         }
     }
@@ -49,16 +53,18 @@ void Game::create() {
 
 void Game::update(const GLfloat deltaTime) {
     if (state == GameState::GAME_ACTIVE) {
-        //cube->update(dt);
+        for (auto& cube : cubes) {
+            cube->update(deltaTime);
+        }
         projection = glm::perspective(glm::radians(camera->zoom),
-                static_cast<GLfloat>(width) / static_cast<GLfloat>(height),
+                static_cast<float>(width) / static_cast<float>(height),
                 0.1f, 100.0f);
         view = camera->getViewMatrix();
     }
 }
 
-void Game::printFPS(const int fps) const {
-    char text[128];
+void Game::printFPS() const {
+    static char text[128];
     snprintf(text, 128, "FPS: %d", fps);
     textRenderer->renderText(text, 10, 45, 0.3f);
 }
@@ -98,7 +104,7 @@ void Game::changeBackground() {
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
         for (const auto cube : cubes) {
-            cube->draw(projection, view);
+            cube->draw(cubeRenderer, projection, view);
         }
         char text[128];
         snprintf(text, 128, "Pos: (%.1f, %.1f, %.1f)",
@@ -115,10 +121,10 @@ void Game::render() const {
     }
 }
 
-void Game::checkMouseClick(const double mouseX, const double mouseY) {
+void Game::checkMouseClick(const double /*mouseX*/, const double /*mouseY*/) {
 }
 
-void Game::mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+    void Game::mouse_button_callback(GLFWwindow* window, int button, int action, int /*mods*/) {
     if (action == GLFW_PRESS) {
         int cursorMode = glfwGetInputMode(window, GLFW_CURSOR);
         if (cursorMode == GLFW_CURSOR_DISABLED) {
@@ -152,6 +158,6 @@ void Game::cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
     }
 }
 
-void Game::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+void Game::scroll_callback(GLFWwindow* /*window*/, double /*xoffset*/, double yoffset) {
     camera->processMouseScroll(yoffset);
 }

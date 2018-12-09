@@ -4,8 +4,8 @@ GameBase* game = new Game();
 const GLint width = 800;
 const GLint height = 600;
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    game->framebuffer_size_callback(window, width, height);
+void framebuffer_size_callback(GLFWwindow* window, int width_, int height_) {
+    game->framebuffer_size_callback(window, width_, height_);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
@@ -24,7 +24,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
     game->scroll_callback(window, xoffset, yoffset);
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glViewport(0, 0, width, height);
-//    glEnable(GL_CULL_FACE);
+ //   glEnable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
