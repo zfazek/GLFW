@@ -2,12 +2,11 @@
 
 #include "ResourceManager.h"
 
-GameBase::GameBase() : keys{} {
+GameBase::GameBase() : keys{false} {
     currentTime = 0.0f;
     deltaTime = 0.0f;
     lastFrameTime = 0.0f;
     lastFrameTimeFPS = 0.0f;
-    deltaTimeFPS = 0.0f;
     numFrame = 0;
     fps = 0;
 }
@@ -59,7 +58,6 @@ void GameBase::framebuffer_size_callback(GLFWwindow* /*window*/, int width_, int
 void GameBase::updateTimers() {
     currentTime = glfwGetTime();
     deltaTime = currentTime - lastFrameTime;
-    deltaTimeFPS = currentTime - lastFrameTimeFPS;
     lastFrameTime = currentTime;
 }
 

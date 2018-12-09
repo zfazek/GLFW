@@ -55,6 +55,5 @@ private:
     GLfloat deltaTime;
     GLfloat lastFrameTime;
     GLfloat lastFrameTimeFPS;
-    GLfloat deltaTimeFPS;
     long numFrame;
 };
