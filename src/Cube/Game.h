@@ -9,6 +9,7 @@
 
 class Cube;
 class CubeRenderer;
+class LightRenderer;
 
 class Game : public GameBase {
 public:
@@ -33,4 +34,5 @@ public:
 
   private:
     CubeRenderer* cubeRenderer;
+    LightRenderer* lightRenderer;
 };

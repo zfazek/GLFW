@@ -3,8 +3,13 @@
 #include "Camera.h"
 #include "Cube.h"
 #include "CubeRenderer.h"
+#include "Light.h"
+#include "LightRenderer.h"
 #include "ResourceManager.h"
 #include "TextRenderer.h"
+
+using std::string;
+using std::rand;
 
 Game::Game() {
 }
@@ -16,9 +21,11 @@ Game::~Game() {
     delete cubeRenderer;
     delete textRenderer;
     delete camera;
+    delete light;
+    delete lightRenderer;
 }
 
-void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height) {
+void Game::init(GLFWwindow* window, const string& windowTitle, const GLuint width, const GLuint height) {
     this->window = window;
     this->windowTitle = windowTitle;
     this->width = width;
@@ -27,11 +34,13 @@ void Game::init(GLFWwindow* window, const std::string& windowTitle, const GLuint
     lastY = height / 2.0f;
     firstMouse = true;
     Cube::init();
+    Light::init();
     create();
     changeBackground();
     textRenderer = new TextRenderer(width, height);
     textRenderer->load("resources/ocraext.ttf", 48);
     cubeRenderer = new CubeRenderer(ResourceManager::getShader(Cube::name));
+    lightRenderer = new LightRenderer(ResourceManager::getShader(Light::name));
 }
 
 void Game::create() {
@@ -39,16 +48,19 @@ void Game::create() {
     for (GLuint x = 0; x < 50; x++) {
         for (GLuint z = 0; z < 50; z++) {
             const GLuint y = 0;
-            float r = static_cast<float>(std::rand()) / RAND_MAX;
-            float g = static_cast<float>(std::rand()) / RAND_MAX;
-            float b = static_cast<float>(std::rand()) / RAND_MAX;
+            float r = static_cast<float>(rand()) / RAND_MAX;
+            float g = static_cast<float>(rand()) / RAND_MAX;
+            float b = static_cast<float>(rand()) / RAND_MAX;
             glm::vec3 color = glm::vec3(r, g, b);
             Cube* cube = new Cube(x, y, z, color);
             cubes.push_back(cube);
         }
     }
+    glm::vec3 color = glm::vec3(1.0f, 0.8f, 0.0f);
+    light = new Light(20, 10, 20, color);
     glm::vec3 position = glm::vec3(0.0f, 10.0f, 0.0f);
     camera = new Camera(position);
+
 }
 
 void Game::update(const GLfloat deltaTime) {
@@ -56,6 +68,7 @@ void Game::update(const GLfloat deltaTime) {
         for (auto& cube : cubes) {
             cube->update(deltaTime);
         }
+        light->update(deltaTime);
         projection = glm::perspective(glm::radians(camera->zoom),
                 static_cast<float>(width) / static_cast<float>(height),
                 0.1f, 100.0f);
@@ -96,17 +109,18 @@ void Game::processInput(const GLfloat deltaTime) {
 }
 
 void Game::changeBackground() {
-    r = static_cast<GLfloat>(std::rand()) / RAND_MAX;
-    g = static_cast<GLfloat>(std::rand()) / RAND_MAX;
-    b = static_cast<GLfloat>(std::rand()) / RAND_MAX;
+    r = static_cast<GLfloat>(rand()) / RAND_MAX;
+    g = static_cast<GLfloat>(rand()) / RAND_MAX;
+    b = static_cast<GLfloat>(rand()) / RAND_MAX;
 }
 
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
         for (const auto cube : cubes) {
-            cube->draw(cubeRenderer, projection, view);
+            cube->draw(cubeRenderer, projection, view, light->getColor(), light->getPosition());
         }
-        char text[128];
+        light->draw(lightRenderer, projection, view);
+        static char text[128];
         snprintf(text, 128, "Pos: (%.1f, %.1f, %.1f)",
                 camera->position.x,
                 camera->position.y,

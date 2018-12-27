@@ -7,6 +7,7 @@
 #include <string>
 
 class Camera;
+class Light;
 class TextRenderer;
 
 enum class GameState {
@@ -43,6 +44,7 @@ protected:
     GLFWwindow* window;
     TextRenderer* textRenderer;
     Camera* camera;
+    Light* light;
     glm::mat4 projection;
     glm::mat4 view;
     std::string windowTitle;

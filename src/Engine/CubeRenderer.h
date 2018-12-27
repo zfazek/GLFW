@@ -11,8 +11,16 @@ class CubeRenderer {
 public:
     CubeRenderer(const Shader& shader);
     ~CubeRenderer();
-    void draw(const Texture2D& texture, const glm::vec3 position, const glm::vec3 size, const glm::vec3 rotate, const glm::vec3 color,
-            const glm::mat4 projection, const glm::mat4 view);
+    void draw(
+            const Texture2D& texture,
+            const glm::vec3 position,
+            const glm::vec3 size,
+            const glm::vec3 rotate,
+            const glm::vec3 color,
+            const glm::mat4 projection,
+            const glm::mat4 view,
+            const glm::vec3 lightColor,
+            const glm::vec3 lightPos);
 
 private:
     Shader shader;
