@@ -4,6 +4,7 @@ add_library(engine_lib
     Camera.cpp
     Cube.cpp
     CubeRenderer.cpp
+    CubesRenderer.cpp
     GameBase.cpp
     Light.cpp
     LightRenderer.cpp

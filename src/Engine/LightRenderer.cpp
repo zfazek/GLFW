@@ -1,11 +1,21 @@
 #include "LightRenderer.h"
 
-LightRenderer::LightRenderer(const Shader& shader_) : shader(shader_), VAO{0} {
+#include "ResourceManager.h"
+
+char LightRenderer::name[] = "light";
+
+LightRenderer::LightRenderer() {
+    init();
+    shader = ResourceManager::getShader(name);
     initRenderData();
 }
 
 LightRenderer::~LightRenderer() {
     glDeleteVertexArrays(1, &VAO);
+}
+
+void LightRenderer::init() {
+    ResourceManager::loadShader("shaders/light_vertex.glsl", "shaders/light_fragment.glsl", nullptr, name);
 }
 
 void LightRenderer::draw(const glm::vec3 position, const glm::vec3 size,
@@ -25,7 +35,9 @@ void LightRenderer::draw(const glm::vec3 position, const glm::vec3 size,
     shader.setVector3f("lightColor", color);
 
     glBindVertexArray(VAO);
+    glFrontFace(GL_CW);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+    glFrontFace(GL_CCW);
     glBindVertexArray(0);
 }
 

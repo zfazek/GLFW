@@ -16,12 +16,9 @@ class Light {
         void draw(LightRenderer* lightRenderer, const glm::mat4 projection, const glm::mat4 view) const;
         glm::vec3 getColor() const;
         glm::vec3 getPosition() const;
-        static void init();
-        static char name[];
 
     private:
         GLfloat side;
         GLfloat x, y, z;
         glm::vec3 color;
-        GLuint width, height;
 };

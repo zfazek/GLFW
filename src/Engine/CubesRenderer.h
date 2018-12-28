@@ -1,26 +1,26 @@
 #pragma once
 
+#include "GameBase.h"
 #include "Shader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-class CubeRenderer {
+class CubesRenderer {
 public:
-    CubeRenderer();
-    ~CubeRenderer();
+    CubesRenderer();
+    ~CubesRenderer();
     void draw(
-            const glm::vec3 position,
-            const glm::vec3 size,
-            const glm::vec3 rotate,
-            const glm::vec3 color,
+            const Cubes& cubes,
             const glm::mat4 projection,
             const glm::mat4 view,
             const glm::vec3 lightColor,
             const glm::vec3 lightPos);
 
+    static constexpr size_t MAX_NUMBER_OF_CUBES = 100000;
+
 private:
-    static char name[];
+    static constexpr char name[] = "cubes";
     Shader shader;
     GLuint VAO = 0;
 

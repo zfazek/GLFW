@@ -5,15 +5,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <vector>
-
 class Cube;
-class CubeRenderer;
+class CubesRenderer;
 class LightRenderer;
 
 class Game : public GameBase {
 public:
-    std::vector<Cube*> cubes;
+    Cubes cubes;
     float lastX;
     float lastY;
     bool firstMouse;
@@ -33,6 +31,6 @@ public:
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
   private:
-    CubeRenderer* cubeRenderer;
+    CubesRenderer* cubesRenderer;
     LightRenderer* lightRenderer;
 };

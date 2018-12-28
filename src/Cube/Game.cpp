@@ -2,10 +2,9 @@
 
 #include "Camera.h"
 #include "Cube.h"
-#include "CubeRenderer.h"
+#include "CubesRenderer.h"
 #include "Light.h"
 #include "LightRenderer.h"
-#include "ResourceManager.h"
 #include "TextRenderer.h"
 
 using std::string;
@@ -18,7 +17,7 @@ Game::~Game() {
     for (const auto cube : cubes) {
         delete cube;
     }
-    delete cubeRenderer;
+    delete cubesRenderer;
     delete textRenderer;
     delete camera;
     delete light;
@@ -33,20 +32,19 @@ void Game::init(GLFWwindow* window, const string& windowTitle, const GLuint widt
     lastX = width / 2.0f;
     lastY = height / 2.0f;
     firstMouse = true;
-    Cube::init();
-    Light::init();
     create();
     changeBackground();
     textRenderer = new TextRenderer(width, height);
     textRenderer->load("resources/ocraext.ttf", 48);
-    cubeRenderer = new CubeRenderer(ResourceManager::getShader(Cube::name));
-    lightRenderer = new LightRenderer(ResourceManager::getShader(Light::name));
+    cubesRenderer = new CubesRenderer();
+    lightRenderer = new LightRenderer();
 }
 
 void Game::create() {
     state = GameState::GAME_ACTIVE;
-    for (GLuint x = 0; x < 50; x++) {
-        for (GLuint z = 0; z < 50; z++) {
+    size_t n_cubes = 100;
+    for (GLuint x = 0; x < n_cubes; x++) {
+        for (GLuint z = 0; z < n_cubes; z++) {
             const GLuint y = 0;
             float r = static_cast<float>(rand()) / RAND_MAX;
             float g = static_cast<float>(rand()) / RAND_MAX;
@@ -56,7 +54,7 @@ void Game::create() {
             cubes.push_back(cube);
         }
     }
-    glm::vec3 color = glm::vec3(1.0f, 0.8f, 0.0f);
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
     light = new Light(20, 10, 20, color);
     glm::vec3 position = glm::vec3(0.0f, 10.0f, 0.0f);
     camera = new Camera(position);
@@ -116,9 +114,7 @@ void Game::changeBackground() {
 
 void Game::render() const {
     if (state == GameState::GAME_ACTIVE) {
-        for (const auto cube : cubes) {
-            cube->draw(cubeRenderer, projection, view, light->getColor(), light->getPosition());
-        }
+        cubesRenderer->draw(cubes, projection, view, light->getColor(), light->getPosition());
         light->draw(lightRenderer, projection, view);
         static char text[128];
         snprintf(text, 128, "Pos: (%.1f, %.1f, %.1f)",

@@ -1,9 +1,6 @@
 #include "Light.h"
 
 #include "LightRenderer.h"
-#include "ResourceManager.h"
-
-char Light::name[] = "light";
 
 Light::Light(const GLuint x_,
              const GLuint y_,
@@ -17,10 +14,6 @@ Light::Light(const GLuint x_,
 }
 
 Light::~Light() {
-}
-
-void Light::init() {
-    ResourceManager::loadShader("shaders/light_vertex.glsl", "shaders/light_fragment.glsl", nullptr, name);
 }
 
 void Light::update(const GLfloat deltaTime) {

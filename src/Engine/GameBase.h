@@ -5,10 +5,14 @@
 #include <glm/glm.hpp>
 
 #include <string>
+#include <vector>
 
 class Camera;
+class Cube;
 class Light;
 class TextRenderer;
+
+typedef std::vector<Cube*> Cubes;
 
 enum class GameState {
     GAME_ACTIVE,
