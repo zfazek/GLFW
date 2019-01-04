@@ -2,10 +2,10 @@
 in vec3 normal;
 in vec3 fragPos;
 in vec2 texCoords;
+in vec3 spriteColor;
 out vec4 fragColor;
 
 uniform sampler2D image;
-uniform vec3 spriteColor;
 uniform vec3 lightColor;
 uniform vec3 lightPos;
 

@@ -24,7 +24,11 @@ class GameBase {
 public:
     GameBase();
     virtual ~GameBase();
-    virtual void init(GLFWwindow* window, const std::string& windowTitle, const GLuint width, const GLuint height) = 0;
+    virtual void init(
+            GLFWwindow* window,
+            const std::string& windowTitle,
+            const GLuint width,
+            const GLuint height) = 0;
     void toggleFullScreen();
     void loop();
     virtual void processInput(const GLfloat deltaTime) = 0;

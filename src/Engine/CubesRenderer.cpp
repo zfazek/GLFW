@@ -38,18 +38,25 @@ void CubesRenderer::draw(
     texture.bind();
     glBindVertexArray(VAO);
 
-    for (const auto cube : cubes) {
-        const glm::vec3 position = glm::vec3(cube->x, cube->y, cube->z);
-        const glm::vec3 size = glm::vec3(cube->side);
+    for (size_t i = 0; i < cubes.size(); i++) {
+        const glm::vec3 position = glm::vec3(cubes[i]->x, cubes[i]->y, cubes[i]->z);
+        const glm::vec3 size = glm::vec3(cubes[i]->side);
         glm::mat4 model = glm::mat4(1.0);
         model = glm::translate(model, position);
         model = glm::scale(model, size);
-
-        shader.setMatrix4fv("model", model);
-        shader.setVector3f("spriteColor", cube->color);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        models[i] = model;
+        colors[i] = cubes[i]->color;
     }
+
+    glBindBuffer(GL_ARRAY_BUFFER, colorsVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * cubes.size(), colors, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, modelsVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * cubes.size(), models, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, cubes.size());
+
     glBindVertexArray(0);
     glFrontFace(GL_CCW);
 }
@@ -57,6 +64,7 @@ void CubesRenderer::draw(
 void CubesRenderer::initRenderData() {
 
     GLfloat vertices[] = {
+        // coord              // normal           // texture
         -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
          0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
@@ -107,8 +115,7 @@ void CubesRenderer::initRenderData() {
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), static_cast<GLvoid*>(nullptr));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(nullptr));
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
@@ -116,13 +123,30 @@ void CubesRenderer::initRenderData() {
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    glm::vec3 coords[MAX_NUMBER_OF_CUBES];
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * MAX_NUMBER_OF_CUBES, coords, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), static_cast<GLvoid*>(nullptr));
+    glGenBuffers(1, &colorsVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, colorsVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * MAX_NUMBER_OF_CUBES, colors, GL_STATIC_DRAW);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)(nullptr));
     glEnableVertexAttribArray(3);
+    glVertexAttribDivisor(3, 1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glGenBuffers(1, &modelsVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, modelsVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * MAX_NUMBER_OF_CUBES, models, GL_STATIC_DRAW);
+    glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(nullptr));
+    glEnableVertexAttribArray(4);
+    glVertexAttribDivisor(4, 1);
+    glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(sizeof(glm::vec4)));
+    glEnableVertexAttribArray(5);
+    glVertexAttribDivisor(5, 1);
+    glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(2 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(6);
+    glVertexAttribDivisor(6, 1);
+    glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(3 * sizeof(glm::vec4)));
+    glEnableVertexAttribArray(7);
+    glVertexAttribDivisor(7, 1);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
 }

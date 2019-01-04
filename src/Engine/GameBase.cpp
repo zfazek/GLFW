@@ -9,6 +9,7 @@ GameBase::GameBase() : keys{false} {
     lastFrameTimeFPS = 0.0f;
     numFrame = 0;
     fps = 0;
+    srand(time(0));
 }
 
 GameBase::~GameBase() {
